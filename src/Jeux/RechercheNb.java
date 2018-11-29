@@ -19,7 +19,7 @@ public class RechercheNb implements Jeu {
 
     @Override
     public void jouer() {
-
+        attaquant.affichageIndice(this.comparaison(attaquant.demandeCombinaison(), combinaison));
     }
 
     @Override

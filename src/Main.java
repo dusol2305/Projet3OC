@@ -7,11 +7,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
         int choixJeux;
         boolean choixValide = true;
 
-        Affichage Affichage = new Affichage();
-        Scanner Sc = new Scanner(System.in);
+        Affichage affichage = new Affichage();
+        Scanner sc = new Scanner(System.in);
 
         /*while (choixValide) {
             Affichage.selectionJeu();

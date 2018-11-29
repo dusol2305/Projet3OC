@@ -28,16 +28,18 @@ public class RechercheNb implements Jeu {
     }
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {
-        String indice = "";
+        String indice;
+        StringBuilder indiceTemp = new StringBuilder();
         for (int i = 0; i < combinaisonATrouver.length(); i++) {
             if (combinaisonJoueur.charAt(i) < combinaisonATrouver.charAt(i)) {
-                indice += "+";
+                indiceTemp.append("+");
             } else if (combinaisonJoueur.charAt(i) > combinaisonATrouver.charAt(i)) {
-                indice += "-";
+                indiceTemp.append("-");
             } else {
-                indice += "=";
+                indiceTemp.append("=");
             }
         }
+        indice = indiceTemp.toString();
         return indice;
     }
 }

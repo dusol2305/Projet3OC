@@ -1,4 +1,18 @@
 package Jeux;
 
-public class Mastermind extends Jeu {
+public class Mastermind implements Jeu {
+    @Override
+    public void initialisation() {
+
+    }
+
+    @Override
+    public void jouer() {
+
+    }
+
+    @Override
+    public boolean estFin() {
+        return false;
+    }
 }

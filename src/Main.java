@@ -8,13 +8,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int choixJeux;
+        /*int choixJeux;
         boolean choixValide = true;
 
         Affichage affichage = new Affichage();
         Scanner sc = new Scanner(System.in);
 
-        /*while (choixValide) {
+        while (choixValide) {
             Affichage.selectionJeu();
             choixJeux = Sc.nextInt();
             switch (choixJeux) {
@@ -31,9 +31,13 @@ public class Main {
             }
         }*/
         Jeu jeu = new RechercheNb(new Humain(), new Humain());
+        System.out.println("===pre init===");
         jeu.initialisation();
+        System.out.println("===post init===");
         while (jeu.estFin()) {
+            System.out.println("===in while===");
              jeu.jouer();
         }
+        System.out.println("===post while===");
     }
 }

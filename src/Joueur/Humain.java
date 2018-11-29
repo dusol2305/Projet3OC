@@ -11,7 +11,7 @@ public class Humain implements Joueur {
 
         System.out.println("Entrer une combinaison :");
 
-        combinaisonTemp.append(sc.toString());
+        combinaisonTemp.append(sc.nextInt());
         combinaison = combinaisonTemp.toString();
 
         return combinaison;
@@ -22,12 +22,13 @@ public class Humain implements Joueur {
         StringBuilder combinaisonTemp = new StringBuilder();
         String combinaison;
 
-        combinaisonTemp.append((int)Math.random() * 57 + 48);
-        combinaisonTemp.append((int)Math.random() * 57 + 48);
-        combinaisonTemp.append((int)Math.random() * 57 + 48);
-        combinaisonTemp.append((int)Math.random() * 57 + 48);
+        combinaisonTemp.append((int) (Math.random() * 9 + 0));
+        combinaisonTemp.append((int) (Math.random() * 9 + 0));
+        combinaisonTemp.append((int) (Math.random() * 9 + 0));
+        combinaisonTemp.append((int) (Math.random() * 9 + 0));
 
         combinaison = combinaisonTemp.toString();
+        System.out.println("Aleatoire : " + combinaison); //del
         return combinaison;
     }
 

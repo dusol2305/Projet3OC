@@ -24,7 +24,7 @@ public class RechercheNb implements Jeu {
 
     @Override
     public boolean estFin() {
-        return false;
+        return true;
     }
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {

@@ -12,7 +12,7 @@ public class Mastermind implements Jeu {
     }
 
     @Override
-    public boolean estFin() {
+    public boolean estFin(String indice) {
         return false;
     }
 }

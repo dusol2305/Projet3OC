@@ -28,7 +28,7 @@ public class Humain implements Joueur {
         combinaisonTemp.append((int) (Math.random() * 9 + 0));
 
         combinaison = combinaisonTemp.toString();
-        System.out.println("Aleatoire : " + combinaison); //del
+        System.out.println("NB_Aleatoire : " + combinaison); //del
         return combinaison;
     }
 

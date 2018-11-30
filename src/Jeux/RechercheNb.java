@@ -6,6 +6,7 @@ public class RechercheNb implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
     private String combinaison;
+    private String indice = "0";
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
@@ -19,12 +20,26 @@ public class RechercheNb implements Jeu {
 
     @Override
     public void jouer() {
-        attaquant.affichageIndice(this.comparaison(attaquant.demandeCombinaison(), combinaison));
+        indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
+        attaquant.affichageIndice(indice);
     }
 
     @Override
-    public boolean estFin() {
-        return true;
+    public boolean estFin(String indice) {
+        int i = indice.length() - 1;
+        while (i > -1) {
+            if (indice.charAt(i) == '=') {
+                i--;
+            } else {
+                return true;
+            }
+        }
+        attaquant.affichageResultatPartie(true);
+        return false;
+    }
+
+    public String getIndice() {
+        return indice;
     }
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {

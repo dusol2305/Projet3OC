@@ -31,13 +31,9 @@ public class Main {
             }
         }*/
         Jeu jeu = new RechercheNb(new Humain(), new Humain());
-        System.out.println("===pre init===");
         jeu.initialisation();
-        System.out.println("===post init===");
-        while (jeu.estFin()) {
-            System.out.println("===in while===");
-             jeu.jouer();
+        while (jeu.estFin(((RechercheNb) jeu).getIndice())) {
+            jeu.jouer();
         }
-        System.out.println("===post while===");
     }
 }

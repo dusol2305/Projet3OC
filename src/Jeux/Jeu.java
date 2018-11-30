@@ -3,5 +3,5 @@ package Jeux;
 public interface Jeu {
     void initialisation();
     void jouer();
-    boolean estFin();
+    boolean estFin(String indice);
 }

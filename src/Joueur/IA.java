@@ -25,11 +25,12 @@ public class IA implements Joueur {
 
     @Override
     public String demandeCombinaison(String indice) {
-        String combinaison = "4455";
+        String combinaison = "4455"; //gneeeee
         char[] iaComb = combinaison.toCharArray();
-        System.out.println("IA entre un combinaison de 4 chiffres:");
-
-        for (int i = indice.length() - 1; i > -1; i--) {
+        System.out.println("==== \n IA entre un combinaison de 4 chiffres:");
+        int i = indice.length() - 1;
+        while (i > -1) {
+            System.out.println("i = " + i); //dell
             if (indice.charAt(i) == '-') {
                 iaComb[i]--;
                 combinaison = String.valueOf(iaComb);
@@ -37,8 +38,9 @@ public class IA implements Joueur {
                 iaComb[i]++;
                 combinaison = String.valueOf(iaComb);
             }
+            i--;
         }
-        System.out.println("combinaison entrée : " + combinaison);
+        System.out.println("combinaison entrée : " + combinaison + "\n====");
         return combinaison;
     }
 
@@ -64,9 +66,9 @@ public class IA implements Joueur {
     @Override // classe pas utile pour IA
     public void affichageResultatPartie(boolean aGagne) {
         if (aGagne) {
-            System.out.println("Gagné");
+            System.out.println("IA Gagné");
         } else {
-            System.out.println("Perdu");
+            System.out.println("IA Perdu");
         }
     }
 }

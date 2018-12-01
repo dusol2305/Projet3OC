@@ -4,12 +4,13 @@ import java.util.Scanner;
 
 public class Humain implements Joueur {
     @Override
-    public String demandeCombinaison() {
+    public String demandeCombinaison(String indice) {
+        this.affichageIndice(indice);
         StringBuilder combinaisonTemp = new StringBuilder();
         String combinaison;
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Entrer une combinaison :");
+        System.out.println("Entrer une combinaison de 4 chiffres:");
 
         combinaisonTemp.append(sc.nextInt());
         combinaison = combinaisonTemp.toString();
@@ -22,10 +23,9 @@ public class Humain implements Joueur {
         StringBuilder combinaisonTemp = new StringBuilder();
         String combinaison;
 
-        combinaisonTemp.append((int) (Math.random() * 9 + 0));
-        combinaisonTemp.append((int) (Math.random() * 9 + 0));
-        combinaisonTemp.append((int) (Math.random() * 9 + 0));
-        combinaisonTemp.append((int) (Math.random() * 9 + 0));
+        for (int i = 4; i>0; i--){
+            combinaisonTemp.append((int) (Math.random() * 9 + 0));
+        }
 
         combinaison = combinaisonTemp.toString();
         System.out.println("NB_Aleatoire : " + combinaison); //del

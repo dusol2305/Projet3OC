@@ -1,34 +1,72 @@
 package Joueur;
 
-import java.util.Scanner;
+public class IA implements Joueur {
+    /*@Override
+    public String demandeCombinaison(String indice) {
+        String combinaison = "4455";
+        int charValue;
+        char charIndice;
+        System.out.println("IA entre une combinaison de 4 chiffres:");
 
-public class IA implements Joueur{
+        for (int i = indice.length() - 1; i > -1; i--) {
+            if (indice.charAt(i) == '-') {
+                charValue = combinaison.charAt(i) - 1;
+                charIndice = (char) charValue;
+                combinaison.charAt(i) = charIndice;
+            } else if (indice.charAt(i) == '+') {
+                charValue = combinaison.charAt(i) + 1;
+                charIndice = (char) charValue;
+                combinaison.charAt(i) = charIndice;
+            }
+        }
+
+        return combinaison;
+    }*/
+
     @Override
-    public String demandeCombinaison() {
-        StringBuilder combinaisonTemp = new StringBuilder();
-        String combinaison;
-        Scanner sc = new Scanner(System.in);
+    public String demandeCombinaison(String indice) {
+        String combinaison = "4455";
+        char[] iaComb = combinaison.toCharArray();
+        System.out.println("IA entre un combinaison de 4 chiffres:");
 
-        System.out.println("Entrer une combinaison :");
-
-        //boucle for avec generation en fonction de l'indice precedent
-        combinaison = combinaisonTemp.toString();
-
+        for (int i = indice.length() - 1; i > -1; i--) {
+            if (indice.charAt(i) == '-') {
+                iaComb[i]--;
+                combinaison = String.valueOf(iaComb);
+            } else if (indice.charAt(i) == '+') {
+                iaComb[i]++;
+                combinaison = String.valueOf(iaComb);
+            }
+        }
+        System.out.println("combinaison entrée : " + combinaison);
         return combinaison;
     }
 
     @Override
     public String demandeCombinaisonAleatoire() {
-        return null;
+        StringBuilder combinaisonTemp = new StringBuilder();
+        String combinaison;
+
+        for (int i = 4; i > 0; i--) {
+            combinaisonTemp.append((int) (Math.random() * 9 + 0));
+        }
+
+        combinaison = combinaisonTemp.toString();
+        System.out.println("NB_Aleatoire : " + combinaison); //del
+        return combinaison;
     }
 
     @Override
     public void affichageIndice(String indice) {
-
+        System.out.println("Réponse : " + indice);
     }
 
-    @Override
+    @Override // classe pas utile pour IA
     public void affichageResultatPartie(boolean aGagne) {
-
+        if (aGagne) {
+            System.out.println("Gagné");
+        } else {
+            System.out.println("Perdu");
+        }
     }
 }

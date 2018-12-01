@@ -1,6 +1,7 @@
 import Jeux.Jeu;
 import Jeux.RechercheNb;
 import Joueur.Humain;
+import Joueur.IA;
 
 import java.util.Scanner;
 
@@ -30,7 +31,7 @@ public class Main {
                     break;
             }
         }*/
-        Jeu jeu = new RechercheNb(new Humain(), new Humain());
+        Jeu jeu = new RechercheNb(new IA(), new Humain());
         jeu.initialisation();
         while (jeu.estFin(((RechercheNb) jeu).getIndice())) {
             jeu.jouer();

@@ -1,6 +1,9 @@
 package Joueur;
 
+import Jeux.RechercheNb;
+
 public class IA implements Joueur {
+    private String combinaison = "4455";
     /*@Override
     public String demandeCombinaison(String indice) {
         String combinaison = "4455";
@@ -24,13 +27,11 @@ public class IA implements Joueur {
     }*/
 
     @Override
-    public String demandeCombinaison(String indice) {
-        String combinaison = "4455"; //gneeeee
+    public String demandeCombinaison(String indice) {;
         char[] iaComb = combinaison.toCharArray();
         System.out.println("==== \n IA entre un combinaison de 4 chiffres:");
         int i = indice.length() - 1;
         while (i > -1) {
-            System.out.println("i = " + i); //dell
             if (indice.charAt(i) == '-') {
                 iaComb[i]--;
                 combinaison = String.valueOf(iaComb);
@@ -54,7 +55,7 @@ public class IA implements Joueur {
         }
 
         combinaison = combinaisonTemp.toString();
-        System.out.println("NB_Aleatoire : " + combinaison); //del
+        System.out.println("NB_Aleatoire : " + combinaison); //dell
         return combinaison;
     }
 

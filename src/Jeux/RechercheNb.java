@@ -6,7 +6,7 @@ public class RechercheNb implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
     private String combinaison;
-    private String indice = "0";
+    private String indice = "4455";
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;

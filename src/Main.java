@@ -3,8 +3,6 @@ import Jeux.RechercheNb;
 import Joueur.Humain;
 import Joueur.IA;
 
-import java.util.Scanner;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -24,7 +22,6 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Lancement Recherche +/-");
-                    RechercheNb RechercheNb = new RechercheNb();
                     break;
                 default:
                     System.out.println("Veuillez choisir un nombre entre 1 et 2");

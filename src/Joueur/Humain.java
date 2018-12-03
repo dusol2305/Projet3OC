@@ -3,14 +3,13 @@ package Joueur;
 import java.util.Scanner;
 
 public class Humain implements Joueur {
+    private String combinaison;
     @Override
     public String demandeCombinaison(String indice) {
-        this.affichageIndice(indice);
         StringBuilder combinaisonTemp = new StringBuilder();
-        String combinaison;
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Entrer une combinaison de 4 chiffres:");
+        System.out.print("Proposition : ");
 
         combinaisonTemp.append(sc.nextInt());
         combinaison = combinaisonTemp.toString();
@@ -28,13 +27,13 @@ public class Humain implements Joueur {
         }
 
         combinaison = combinaisonTemp.toString();
-        System.out.println("NB_Aleatoire : " + combinaison); //del
+        System.out.println("NB_Aleatoire : " + combinaison); //dell
         return combinaison;
     }
 
     @Override
     public void affichageIndice(String indice) {
-        System.out.println("Réponse : " + indice);
+        System.out.println("Proposition : " + combinaison + " -> Réponse : " + indice + "\n");
     }
 
     @Override

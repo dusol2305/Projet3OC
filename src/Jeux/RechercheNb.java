@@ -6,7 +6,7 @@ public class RechercheNb implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
     private String combinaison;
-    private String indice = "4455";
+    private String indice = "####";
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
@@ -21,6 +21,7 @@ public class RechercheNb implements Jeu {
     @Override
     public void jouer() {
         indice = this.comparaison(attaquant.demandeCombinaison(getIndice()), combinaison);
+        attaquant.affichageIndice(indice);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class Main {
                     break;
             }
         }*/
-        Jeu jeu = new RechercheNb(new IA(), new Humain());
+        Jeu jeu = new RechercheNb(new Humain(), new IA());
         jeu.initialisation();
         while (jeu.estFin(((RechercheNb) jeu).getIndice())) {
             jeu.jouer();

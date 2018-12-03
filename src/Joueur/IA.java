@@ -1,35 +1,12 @@
 package Joueur;
 
-import Jeux.RechercheNb;
-
 public class IA implements Joueur {
     private String combinaison = "4455";
-    /*@Override
-    public String demandeCombinaison(String indice) {
-        String combinaison = "4455";
-        int charValue;
-        char charIndice;
-        System.out.println("IA entre une combinaison de 4 chiffres:");
-
-        for (int i = indice.length() - 1; i > -1; i--) {
-            if (indice.charAt(i) == '-') {
-                charValue = combinaison.charAt(i) - 1;
-                charIndice = (char) charValue;
-                combinaison.charAt(i) = charIndice;
-            } else if (indice.charAt(i) == '+') {
-                charValue = combinaison.charAt(i) + 1;
-                charIndice = (char) charValue;
-                combinaison.charAt(i) = charIndice;
-            }
-        }
-
-        return combinaison;
-    }*/
 
     @Override
     public String demandeCombinaison(String indice) {;
         char[] iaComb = combinaison.toCharArray();
-        System.out.println("==== \n IA entre un combinaison de 4 chiffres:");
+        System.out.println("IA entre un combinaison de 4 chiffres:");
         int i = indice.length() - 1;
         while (i > -1) {
             if (indice.charAt(i) == '-') {
@@ -41,7 +18,7 @@ public class IA implements Joueur {
             }
             i--;
         }
-        System.out.println("combinaison entrée : " + combinaison + "\n====");
+        System.out.println("Proposition : " + combinaison);
         return combinaison;
     }
 
@@ -61,10 +38,10 @@ public class IA implements Joueur {
 
     @Override
     public void affichageIndice(String indice) {
-        System.out.println("Réponse : " + indice);
+        System.out.println("Proposition : " + combinaison + " -> Réponse : " + indice + "\n");
     }
 
-    @Override // classe pas utile pour IA
+    @Override
     public void affichageResultatPartie(boolean aGagne) {
         if (aGagne) {
             System.out.println("IA Gagné");

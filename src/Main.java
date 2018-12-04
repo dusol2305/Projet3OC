@@ -1,4 +1,5 @@
 import Jeux.Jeu;
+import Jeux.Mastermind;
 import Jeux.RechercheNb;
 import Joueur.Humain;
 import Joueur.IA;
@@ -20,6 +21,11 @@ public class Main {
             switch (choixJeux) {
                 case 1:
                     System.out.println("Lancement Mastermind");
+                    Jeu mastermind = new Mastermind(new Humain(), new Humain());
+                    mastermind.initialisation();
+                    while (mastermind.estFin(((Mastermind) mastermind).getIndice())) {
+                        mastermind.jouer();
+                    }
                     break;
 
                 case 2:

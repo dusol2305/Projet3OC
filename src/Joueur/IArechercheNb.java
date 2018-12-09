@@ -1,19 +1,10 @@
 package Joueur;
 
-import java.util.Scanner;
+public class IArechercheNb implements Joueur {
+    private String combinaison = "4455";
 
-public class Humain implements Joueur {
-    private String combinaison;
     @Override
     public String demandeCombinaison() {
-        StringBuilder combinaisonTemp = new StringBuilder();
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Proposition : ");
-
-        combinaisonTemp.append(sc.nextInt());
-        combinaison = combinaisonTemp.toString();
-
         return combinaison;
     }
 
@@ -22,7 +13,7 @@ public class Humain implements Joueur {
         StringBuilder combinaisonTemp = new StringBuilder();
         String combinaison;
 
-        for (int i = 4; i>0; i--){
+        for (int i = 4; i > 0; i--) {
             combinaisonTemp.append((int) (Math.random() * 9 + 0));
         }
 
@@ -32,15 +23,27 @@ public class Humain implements Joueur {
 
     @Override
     public void envoyerIndice(String indice) {
+        char[] iaComb = combinaison.toCharArray();
+        int i = indice.length() - 1;
+        while (i > -1) {
+            if (indice.charAt(i) == '-') {
+                iaComb[i]--;
+                combinaison = String.valueOf(iaComb);
+            } else if (indice.charAt(i) == '+') {
+                iaComb[i]++;
+                combinaison = String.valueOf(iaComb);
+            }
+            i--;
+        }
         System.out.println("Proposition : " + combinaison + " -> Réponse : " + indice + "\n");
     }
 
     @Override
     public void affichageResultatPartie(boolean aGagne) {
         if (aGagne) {
-            System.out.println("Gagné");
+            System.out.println("IArechercheNb Gagné");
         } else {
-            System.out.println("Perdu");
+            System.out.println("IArechercheNb Perdu");
         }
     }
 }

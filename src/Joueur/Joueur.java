@@ -1,9 +1,9 @@
 package Joueur;
 
 public interface Joueur {
-    String demandeCombinaison(String indice);
+    String demandeCombinaison();
     String demandeCombinaisonAleatoire();
-    void affichageIndice(String indice);
+    void envoyerIndice(String indice);
     void affichageResultatPartie (boolean aGagne);
 
 }

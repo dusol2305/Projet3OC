@@ -20,8 +20,8 @@ public class RechercheNb implements Jeu {
 
     @Override
     public void jouer() {
-        indice = this.comparaison(attaquant.demandeCombinaison(getIndice()), combinaison);
-        attaquant.affichageIndice(indice);
+        indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
+        attaquant.envoyerIndice(indice);
     }
 
     @Override

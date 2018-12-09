@@ -7,6 +7,7 @@ public class Mastermind implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private String indice;
+    private int bienPlace = 0;
 
     public Mastermind(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
@@ -20,12 +21,15 @@ public class Mastermind implements Jeu {
 
     @Override
     public void jouer() {
-        indice = this.comparaison(attaquant.demandeCombinaison(getIndice()), combinaison);
-        attaquant.affichageIndice(indice);
+        indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
+        attaquant.envoyerIndice(indice);
     }
 
     @Override
     public boolean estFin(String indice) {
+        if (bienPlace == combinaison.length()) {
+            return false;
+        }
         return true;
     }
 
@@ -34,16 +38,18 @@ public class Mastermind implements Jeu {
     }
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {
-        int bienPlace = 0;
+        bienPlace = 0;
         int present = 0;
         String indice;
         StringBuilder indiceTemp = new StringBuilder();
-        for (int i = 0; i < combinaisonATrouver.length() - 1; i++) {
+        System.out.println("comb joueur : " + combinaisonJoueur + "\ncomb a trouver : " + combinaisonATrouver);
+        for (int i = 0; i < combinaisonATrouver.length(); i++) {
             if (combinaisonJoueur.charAt(i) == combinaisonATrouver.charAt(i)) {
                 bienPlace++;
+                continue;
             }
-            for (int j = 0; j < combinaisonJoueur.length() - 1; j++) {
-                if (combinaisonJoueur.charAt(i) == combinaisonATrouver.charAt(j) && i != j) {
+            for (int j = 0; j < combinaisonJoueur.length(); j++) {
+                if (combinaisonJoueur.charAt(j) == combinaisonATrouver.charAt(i)) {
                     present++;
                 }
             }

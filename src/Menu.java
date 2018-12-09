@@ -83,8 +83,8 @@ public class Menu {
     public void lancementJeu() {
 
         switch (choix[0]) {
-            case 1:
-                switch (choix[1]) {
+            case 1: // Selection de RechercheNb
+                switch (choix[1]) { // choix du mode de RechercherNb
                     case 1:
                         Jeu mastermindChall = new Mastermind(new Humain(), new IAmastermind());
                         mastermindChall.initialisation();
@@ -107,11 +107,14 @@ public class Menu {
                             mastermindDuel.jouer();
                         }
                         break;
+                    default :
+                        System.err.println("erreur dans la selection du mode");
+                        break;
                 }
                 break;
 
-            case 2:
-                switch (choix[1]) {
+            case 2: // Selection de Mastermind
+                switch (choix[1]) { // choix du mode de Mastermind
                     case 1:
                         Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb());
                         rechercheNbChall.initialisation();

@@ -15,7 +15,12 @@ public class Humain implements Joueur {
 
     @Override
     public String demandeCombinaisonAleatoire() {
-        return this.demandeCombinaison();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Entrez une combinaison : ");
+        combinaison = sc.nextLine();
+
+        return combinaison;
+        // return this.demandeCombinaison();
     }
 
     @Override

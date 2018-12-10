@@ -82,23 +82,25 @@ public class MenuJeu {
                     case 1:
                         Jeu mastermindChall = new Mastermind(new Humain(), new IAmastermind());
                         mastermindChall.initialisation();
-                        while (mastermindChall.estFin(((Mastermind) mastermindChall).getIndice())) {
+                        while (mastermindChall.estFin()) {
                             mastermindChall.jouer();
                         }
                         break;
                     case 2:
                         Jeu mastermindDef = new Mastermind(new IAmastermind(), new Humain());
                         mastermindDef.initialisation();
-                        while (mastermindDef.estFin(((Mastermind) mastermindDef).getIndice())) {
+                        while (mastermindDef.estFin()) {
                             mastermindDef.jouer();
                         }
                         break;
                     case 3:
-                        // mode duel a creer
-                        Jeu mastermindDuel = new Mastermind(new Humain(), new IAmastermind());
-                        mastermindDuel.initialisation();
-                        while (mastermindDuel.estFin(((Mastermind) mastermindDuel).getIndice())) {
-                            mastermindDuel.jouer();
+                        Jeu mastermindDuel1 = new Mastermind(new Humain(), new IAmastermind());
+                        Jeu mastermindDuel2 = new Mastermind(new IAmastermind(), new Humain());
+                        mastermindDuel1.initialisation();
+                        mastermindDuel2.initialisation();
+                        while (mastermindDuel1.estFin() && mastermindDuel2.estFin()) {
+                            mastermindDuel1.jouer();
+                            mastermindDuel2.jouer();
                         }
                         break;
                     default:
@@ -112,23 +114,27 @@ public class MenuJeu {
                     case 1:
                         Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb());
                         rechercheNbChall.initialisation();
-                        while (rechercheNbChall.estFin(((RechercheNb) rechercheNbChall).getIndice())) {
+                        while (!rechercheNbChall.estFin()) {
                             rechercheNbChall.jouer();
                         }
                         break;
                     case 2:
                         Jeu rechercheNbDef = new RechercheNb(new IArechercheNb(), new Humain());
                         rechercheNbDef.initialisation();
-                        while (rechercheNbDef.estFin(((RechercheNb) rechercheNbDef).getIndice())) {
+                        while (!rechercheNbDef.estFin()) {
                             rechercheNbDef.jouer();
                         }
                         break;
                     case 3:
-                        // mode duel a creer
-                        Jeu rechercheNbDuel = new RechercheNb(new Humain(), new IArechercheNb());
-                        rechercheNbDuel.initialisation();
-                        while (rechercheNbDuel.estFin(((RechercheNb) rechercheNbDuel).getIndice())) {
-                            rechercheNbDuel.jouer();
+                        Jeu rechercheNbDuel1 = new RechercheNb(new Humain(), new IArechercheNb());
+                        Jeu rechercheNbDuel2 = new RechercheNb(new IAmastermind(), new Humain());
+                        rechercheNbDuel1.initialisation();
+                        rechercheNbDuel2.initialisation();
+                        while (!rechercheNbDuel1.estFin() && !rechercheNbDuel2.estFin()) {
+                            System.out.println("Tour du joueur");
+                            rechercheNbDuel1.jouer();
+                            System.out.println("Tour de l'IA");
+                            rechercheNbDuel2.jouer();
                         }
                         break;
                 }

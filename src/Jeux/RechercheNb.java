@@ -22,28 +22,20 @@ public class RechercheNb implements Jeu {
     public void jouer() {
         indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
         attaquant.envoyerIndice(indice);
-        if (MenuJeu.isDuel()){
-            indice = this.comparaison(defenseur.demandeCombinaison(), combinaison);
-            defenseur.envoyerIndice(indice);
-        }
     }
 
     @Override
-    public boolean estFin(String indice) {
+    public boolean estFin() {
         int i = indice.length() - 1;
         while (i > -1) {
             if (indice.charAt(i) == '=') {
                 i--;
             } else {
-                return true;
+                return false;
             }
         }
         attaquant.affichageResultatPartie(true);
-        return false;
-    }
-
-    public String getIndice() {
-        return indice;
+        return true;
     }
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {

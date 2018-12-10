@@ -1,10 +1,14 @@
 package Joueur;
 
 public class IAmastermind implements Joueur {
-    private String combinaison = "5555";
+    String indice;
+    private String combinaison = "0000"; //1bp 2 présent
+    private String combinaison2 = "1956"; // 1bp 2présent
 
     @Override
     public String demandeCombinaison() {
+        combinaison = demandeCombinaisonAleatoire();
+        // mettre code avant
         System.out.print("Proposition : " + combinaison + " -> ");
         return combinaison;
     }

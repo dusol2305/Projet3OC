@@ -30,15 +30,11 @@ public class Mastermind implements Jeu {
     }
 
     @Override
-    public boolean estFin(String indice) {
+    public boolean estFin() {
         if (bienPlace == combinaison.length()) {
             return false;
         }
         return true;
-    }
-
-    public String getIndice() {
-        return indice;
     }
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {

@@ -1,10 +1,11 @@
 package Joueur;
 
 public class IAmastermind implements Joueur {
-    private String combinaison;
+    private String combinaison = "5555";
 
     @Override
     public String demandeCombinaison() {
+        System.out.print("Proposition : " + combinaison + " -> ");
         return combinaison;
     }
 
@@ -18,12 +19,12 @@ public class IAmastermind implements Joueur {
         }
 
         combinaison = combinaisonTemp.toString();
-        System.out.println(combinaison); // dell
         return combinaison;
     }
 
     @Override
     public void envoyerIndice(String indice) {
+        System.out.println(indice);
     }
 
     @Override

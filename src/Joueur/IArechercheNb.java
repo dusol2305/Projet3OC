@@ -23,6 +23,8 @@ public class IArechercheNb implements Joueur {
 
     @Override
     public void envoyerIndice(String indice) {
+        System.out.println("Proposition : " + combinaison + " -> Réponse : " + indice + "\n");
+
         char[] iaComb = combinaison.toCharArray();
         int i = indice.length() - 1;
         while (i > -1) {
@@ -35,7 +37,6 @@ public class IArechercheNb implements Joueur {
             }
             i--;
         }
-        System.out.println("Proposition : " + combinaison + " -> Réponse : " + indice + "\n");
     }
 
     @Override

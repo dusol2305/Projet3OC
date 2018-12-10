@@ -1,15 +1,14 @@
-import Jeux.Jeu;
-import Jeux.Mastermind;
-import Jeux.RechercheNb;
+package Jeux;
+
 import Joueur.Humain;
 import Joueur.IAmastermind;
 import Joueur.IArechercheNb;
 
 import java.util.Scanner;
 
-public class Menu {
-    boolean quitter = true;
-    byte[] choix = {0, 0};
+public class MenuJeu {
+    private boolean quitter = true;
+    private static byte[] choix = {0, 0};
 
     public void selectionJeu() {
         int choixJeux;
@@ -18,7 +17,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
 
         while (choixValide) {
-            System.out.println("Choix du jeux :\n1 : Mastermind\n2 : Recherche +/-\n3 : Quitter");
+            System.out.println("Choix du jeux :\n1 : Mastermind\n2 : Recherche +/-");
             choixJeux = sc.nextInt();
             switch (choixJeux) {
                 case 1:
@@ -30,11 +29,6 @@ public class Menu {
                 case 2:
                     System.out.println("Selection Recherche +/-");
                     choix[0] = 2;
-                    choixValide = false;
-                    break;
-
-                case 3:
-                    quitter = false;
                     choixValide = false;
                     break;
 
@@ -107,7 +101,7 @@ public class Menu {
                             mastermindDuel.jouer();
                         }
                         break;
-                    default :
+                    default:
                         System.err.println("erreur dans la selection du mode");
                         break;
                 }
@@ -143,5 +137,43 @@ public class Menu {
 
                 break;
         }
+    }
+
+    public void run() {
+        byte choixDeFin;
+        boolean choixValide = true;
+        while (quitter) {
+            this.selectionJeu();
+            this.selectionMode();
+            this.lancementJeu();
+            while (choixValide) {
+                System.out.println("Que souhaitez vous faire ?\n1 : Rejouer au même jeu\n2 : Jouer à un autre jeu\n3 : Quitter");
+                Scanner sc = new Scanner(System.in);
+                choixDeFin = sc.nextByte();
+                switch (choixDeFin) {
+                    case 1:
+                        this.lancementJeu();
+                        break;
+                    case 2:
+                        choixValide = false;
+                        break;
+                    case 3:
+                        quitter = false;
+                        choixValide = false;
+                        break;
+                    default:
+                        System.out.println("Veuillez choisir entre 1 et 3");
+                        break;
+                }
+            }
+            choixValide = true;
+        }
+    }
+
+    public static boolean isDuel() {
+        if (choix[1] == 3) {
+            return true;
+        }
+        return false;
     }
 }

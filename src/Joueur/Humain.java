@@ -6,28 +6,16 @@ public class Humain implements Joueur {
     private String combinaison;
     @Override
     public String demandeCombinaison() {
-        StringBuilder combinaisonTemp = new StringBuilder();
         Scanner sc = new Scanner(System.in);
-
         System.out.print("Proposition : ");
-
-        combinaisonTemp.append(sc.nextInt());
-        combinaison = combinaisonTemp.toString();
+        combinaison = sc.nextLine();
 
         return combinaison;
     }
 
     @Override
     public String demandeCombinaisonAleatoire() {
-        StringBuilder combinaisonTemp = new StringBuilder();
-        String combinaison;
-
-        for (int i = 4; i>0; i--){
-            combinaisonTemp.append((int) (Math.random() * 9 + 0));
-        }
-
-        combinaison = combinaisonTemp.toString();
-        return combinaison;
+        return this.demandeCombinaison();
     }
 
     @Override

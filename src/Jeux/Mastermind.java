@@ -23,6 +23,10 @@ public class Mastermind implements Jeu {
     public void jouer() {
         indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
         attaquant.envoyerIndice(indice);
+        if (MenuJeu.isDuel()){
+            indice = this.comparaison(defenseur.demandeCombinaison(), combinaison);
+            defenseur.envoyerIndice(indice);
+        }
     }
 
     @Override
@@ -42,7 +46,6 @@ public class Mastermind implements Jeu {
         int present = 0;
         String indice;
         StringBuilder indiceTemp = new StringBuilder();
-        System.out.println("comb joueur : " + combinaisonJoueur + "\ncomb a trouver : " + combinaisonATrouver);
         for (int i = 0; i < combinaisonATrouver.length(); i++) {
             if (combinaisonJoueur.charAt(i) == combinaisonATrouver.charAt(i)) {
                 bienPlace++;

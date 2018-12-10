@@ -22,6 +22,10 @@ public class RechercheNb implements Jeu {
     public void jouer() {
         indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
         attaquant.envoyerIndice(indice);
+        if (MenuJeu.isDuel()){
+            indice = this.comparaison(defenseur.demandeCombinaison(), combinaison);
+            defenseur.envoyerIndice(indice);
+        }
     }
 
     @Override

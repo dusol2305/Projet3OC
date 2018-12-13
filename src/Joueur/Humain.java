@@ -20,7 +20,6 @@ public class Humain implements Joueur {
         combinaison = sc.nextLine();
 
         return combinaison;
-        // return this.demandeCombinaison();
     }
 
     @Override

@@ -7,7 +7,9 @@ public class Mastermind implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private String indice;
-    private int bienPlace = 0;
+    private static int bienPlace = 0;
+    private static int present = 0;
+
 
     public Mastermind(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
@@ -39,7 +41,7 @@ public class Mastermind implements Jeu {
 
     private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {
         bienPlace = 0;
-        int present = 0;
+        present = 0;
         String indice;
         StringBuilder indiceTemp = new StringBuilder();
         for (int i = 0; i < combinaisonATrouver.length(); i++) {
@@ -56,5 +58,13 @@ public class Mastermind implements Jeu {
         indiceTemp.append(present + " présent, " + bienPlace + " bien placé");
         indice = indiceTemp.toString();
         return indice;
+    }
+
+    public static int getBienPlace() {
+        return bienPlace;
+    }
+
+    public static int getPresent() {
+        return present;
     }
 }

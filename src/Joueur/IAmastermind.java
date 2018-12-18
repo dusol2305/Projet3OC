@@ -6,26 +6,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IAmastermind implements Joueur {
-    List Solutions = new ArrayList();
+    private List<String> solutions = new ArrayList();
     private String combinaison = "0000";
     private String combinaison2 = "0000";
+
+    public IAmastermind() {
+        char[] combinaisonTemp = {'0', '0', '0', '0'};
+        int i = combinaisonTemp.length - 1;
+        while (solutions.size() <= 10000) {
+            solutions.add(String.valueOf(combinaisonTemp));
+            while (i > -1 && combinaisonTemp[i] == '9') {
+                combinaisonTemp[i] = '0';
+                i--;
+            }
+            if (i > -1 && combinaisonTemp[i] < '9') {
+                combinaisonTemp[i]++;
+            }
+            i = combinaisonTemp.length - 1;
+        }
+    }
 
     @Override
     public String demandeCombinaison() {
         int bienPlace = 0;
         int present = 0;
-        char[] combinaisonTemp = combinaison.toCharArray();
+        int random;
 
-        while (combinaison2 != "9999") {
-            for (int i = 3; i > -1; i--) {
-                if (combinaisonTemp[i] == '9' && i != 0) {
-                    combinaisonTemp[i] = '0';
-                } else if(combinaisonTemp[i] != '9'){
-                    combinaisonTemp[i]++;
-                }
-            }
+        for (int combI = 0; combI < solutions.size() - 1; combI++){ //retire de la liste des solutions, les solutions qui ne sont pas des possibilitées de réponse.
 
-            combinaison2 = String.valueOf(combinaisonTemp);
+            combinaison2 = solutions.get(combI);
 
             for (int i = 0; i < combinaison.length(); i++) {
                 if (combinaison2.charAt(i) == combinaison.charAt(i)) {
@@ -33,18 +42,22 @@ public class IAmastermind implements Joueur {
                     continue;
                 }
                 for (int j = 0; j < combinaison2.length(); j++) {
-                    if (combinaison2.charAt(j) == combinaison.charAt(i)) {
+                    if (combinaison2.charAt(j) == combinaison.charAt(j)) {
                         present++;
                     }
                 }
             }
 
-            if ((bienPlace == Mastermind.getBienPlace()) && present == Mastermind.getPresent()) {
-                Solutions.add(combinaison2);
+            if ((bienPlace != Mastermind.getBienPlace()) && present != Mastermind.getPresent()) {
+                solutions.remove(combinaison2);
             }
+            bienPlace = 0;
+            present = 0;
         }
-        combinaison = ((String) Solutions.get(1));
-        System.out.println("combinaison de l'ia = " + combinaison);
+        random = (int)(Math.random() * solutions.size()-1 + 0);
+        System.out.println("\nsolution.size = " + solutions.size() + "\nrandom : " + random + "\n"); //dell
+        combinaison = solutions.get(random);
+
         System.out.print("Proposition : " + combinaison + " -> ");
         return combinaison;
     }
@@ -56,8 +69,8 @@ public class IAmastermind implements Joueur {
         for (int i = 4; i > 0; i--) {
             combinaisonTemp.append((int) (Math.random() * 9 + 0));
         }
-
         combinaison = combinaisonTemp.toString();
+
         return combinaison;
     }
 

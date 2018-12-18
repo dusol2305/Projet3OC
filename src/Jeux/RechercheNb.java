@@ -1,6 +1,7 @@
 package Jeux;
 
 import Joueur.Joueur;
+import Main.Main;
 
 public class RechercheNb implements Jeu {
     private Joueur attaquant;
@@ -16,6 +17,9 @@ public class RechercheNb implements Jeu {
     @Override
     public void initialisation() {
         combinaison = defenseur.demandeCombinaisonAleatoire();
+        if (Main.devMod){
+            System.out.println("Combinaison à trouver : " + combinaison);
+        }
     }
 
     @Override

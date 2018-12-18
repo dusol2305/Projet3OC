@@ -1,6 +1,7 @@
 package Jeux;
 
 import Joueur.Joueur;
+import Main.Main;
 
 public class Mastermind implements Jeu {
     private Joueur attaquant;
@@ -19,6 +20,9 @@ public class Mastermind implements Jeu {
     @Override
     public void initialisation() {
         combinaison = defenseur.demandeCombinaisonAleatoire();
+        if (Main.devMod){
+            System.out.println("Combinaison à trouver : " + combinaison);
+        }
     }
 
     @Override

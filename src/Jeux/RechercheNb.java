@@ -3,21 +3,54 @@ package Jeux;
 import Joueur.Joueur;
 import Main.Main;
 
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
+
 public class RechercheNb implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
     private String combinaison;
-    private String indice = "####";
+    private String indice;
+
+    private int essaisRechercheNB;
+    private int tailleRechercheNB;
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
+
+        //code copié
+        Properties prop = new Properties();
+        Reader in = null;
+        try {
+            in = new FileReader("src/ressources/config.properties");
+
+            // load a properties file
+            prop.load(in);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //code copié
+        essaisRechercheNB = Integer.parseInt(prop.getProperty("rechercheNbessais"));
+
+        System.out.println("Nombre d'éssais : " + essaisRechercheNB);
     }
 
     @Override
     public void initialisation() {
         combinaison = defenseur.demandeCombinaisonAleatoire();
-        if (Main.devMod){
+        if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
         }
     }
@@ -30,15 +63,22 @@ public class RechercheNb implements Jeu {
 
     @Override
     public boolean estFin() {
-        int i = indice.length() - 1;
-        while (i > -1) {
-            if (indice.charAt(i) == '=') {
-                i--;
-            } else {
-                return false;
-            }
+        if (indice == null){
+            return false;
         }
-        attaquant.affichageResultatPartie(true);
+        if (essaisRechercheNB > 0) {
+            int i = indice.length() - 1;
+            while (i > -1) {
+                if (indice.charAt(i) == '=') {
+                    i--;
+                } else {
+                    return false;
+                }
+            }
+            attaquant.affichageResultatPartie(true);
+        } else {
+            attaquant.affichageResultatPartie(false);
+        }
         return true;
     }
 

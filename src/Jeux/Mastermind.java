@@ -3,11 +3,18 @@ package Jeux;
 import Joueur.Joueur;
 import Main.Main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class Mastermind implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
     private String combinaison;
     private String indice;
+    private int essaisMastermind = 15;
     private static int bienPlace = 0;
     private static int present = 0;
 
@@ -20,7 +27,7 @@ public class Mastermind implements Jeu {
     @Override
     public void initialisation() {
         combinaison = defenseur.demandeCombinaisonAleatoire();
-        if (Main.devMod){
+        if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
         }
     }
@@ -29,7 +36,7 @@ public class Mastermind implements Jeu {
     public void jouer() {
         indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
         attaquant.envoyerIndice(indice);
-        if (MenuJeu.isDuel()){
+        if (MenuJeu.isDuel()) {
             indice = this.comparaison(defenseur.demandeCombinaison(), combinaison);
             defenseur.envoyerIndice(indice);
         }
@@ -37,7 +44,13 @@ public class Mastermind implements Jeu {
 
     @Override
     public boolean estFin() {
-        if (bienPlace == combinaison.length()) {
+        if (essaisMastermind > 0) {
+            if (bienPlace == combinaison.length()) {
+                attaquant.affichageResultatPartie(true);
+                return false;
+            }
+        } else {
+            attaquant.affichageResultatPartie(false);
             return false;
         }
         return true;

@@ -32,7 +32,7 @@ public class IAmastermind implements Joueur {
         int present = 0;
         int random;
 
-        for (int combI = 0; combI < solutions.size() - 1; combI++){ //retire de la liste des solutions, les solutions qui ne sont pas des possibilitées de réponse.
+        for (int combI = 0; combI < solutions.size();){ //retire de la liste des solutions, les solutions qui ne sont pas des possibilitées de réponse.
 
             combinaison2 = solutions.get(combI);
 
@@ -48,12 +48,15 @@ public class IAmastermind implements Joueur {
                 }
             }
 
-            if ((bienPlace != Mastermind.getBienPlace()) && present != Mastermind.getPresent()) {
+            if ((bienPlace != Mastermind.getBienPlace()) || present != Mastermind.getPresent()) {
                 solutions.remove(combinaison2);
+            } else {
+                combI++;
             }
             bienPlace = 0;
             present = 0;
         }
+        solutions.remove(combinaison);
         random = (int)(Math.random() * solutions.size()-1 + 0);
         System.out.println("\nsolution.size = " + solutions.size() + "\nrandom : " + random + "\n"); //dell
         combinaison = solutions.get(random);

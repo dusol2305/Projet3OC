@@ -77,7 +77,7 @@ public class MenuJeu {
     public void lancementJeu() {
 
         switch (choix[0]) {
-            case 1: // Selection de RechercheNb
+            case 1: // Selection de Mastermind
                 switch (choix[1]) { // choix du mode de RechercherNb
                     case 1:
                         Jeu mastermindChall = new Mastermind(new Humain(), new IAmastermind());
@@ -109,10 +109,10 @@ public class MenuJeu {
                 }
                 break;
 
-            case 2: // Selection de Mastermind
+            case 2: // Selection de RechercheNB
                 switch (choix[1]) { // choix du mode de Mastermind
                     case 1:
-                        Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb());
+                        Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb()); //remettre hum ia
                         rechercheNbChall.initialisation();
                         while (!rechercheNbChall.estFin()) {
                             rechercheNbChall.jouer();
@@ -127,7 +127,7 @@ public class MenuJeu {
                         break;
                     case 3:
                         Jeu rechercheNbDuel1 = new RechercheNb(new Humain(), new IArechercheNb());
-                        Jeu rechercheNbDuel2 = new RechercheNb(new IAmastermind(), new Humain());
+                        Jeu rechercheNbDuel2 = new RechercheNb(new IArechercheNb(), new Humain());
                         rechercheNbDuel1.initialisation();
                         rechercheNbDuel2.initialisation();
                         while (!rechercheNbDuel1.estFin() && !rechercheNbDuel2.estFin()) {
@@ -140,7 +140,7 @@ public class MenuJeu {
                 }
                 break;
             default:
-
+                System.err.println("erreur dans la selection du jeu");
                 break;
         }
     }
@@ -174,12 +174,5 @@ public class MenuJeu {
             }
             choixValide = true;
         }
-    }
-
-    public static boolean isDuel() {
-        if (choix[1] == 3) {
-            return true;
-        }
-        return false;
     }
 }

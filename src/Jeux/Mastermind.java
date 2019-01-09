@@ -3,12 +3,6 @@ package Jeux;
 import Joueur.Joueur;
 import Main.Main;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 public class Mastermind implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
@@ -34,12 +28,9 @@ public class Mastermind implements Jeu {
 
     @Override
     public void jouer() {
-        indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
+        String combinaisonJoueur = attaquant.demandeCombinaison();
+        indice = this.comparaison(combinaisonJoueur, combinaison);
         attaquant.envoyerIndice(indice);
-        if (MenuJeu.isDuel()) {
-            indice = this.comparaison(defenseur.demandeCombinaison(), combinaison);
-            defenseur.envoyerIndice(indice);
-        }
     }
 
     @Override
@@ -56,32 +47,44 @@ public class Mastermind implements Jeu {
         return true;
     }
 
-    private String comparaison(String combinaisonJoueur, String combinaisonATrouver) {
+    public static String comparaison(String combinaisonJoueur, String combinaisonATrouver) {
         bienPlace = 0;
         present = 0;
+        boolean[] antiDoublon = new boolean[combinaisonATrouver.length()];
         String indice;
         StringBuilder indiceTemp = new StringBuilder();
+
+        for (int i = 0; i < combinaisonJoueur.length(); i++) { //initialisation d'un tableau rempli de 1
+            antiDoublon[i] = true;
+        }
+
         for (int i = 0; i < combinaisonATrouver.length(); i++) {
             if (combinaisonJoueur.charAt(i) == combinaisonATrouver.charAt(i)) {
                 bienPlace++;
-                continue;
+                antiDoublon[i] = false;
             }
-            for (int j = 0; j < combinaisonJoueur.length(); j++) {
-                if (combinaisonJoueur.charAt(j) == combinaisonATrouver.charAt(i)) {
-                    present++;
+        }
+
+        for (int i = 0; i < combinaisonATrouver.length(); i++){
+            for (int j = 0; j < combinaisonATrouver.length(); j++) {
+            if (i!= j && antiDoublon[i] == true && combinaisonATrouver.charAt(i) == combinaisonATrouver.charAt(j)){
+                antiDoublon[j] = false;
                 }
             }
         }
+
+        for (int i = 0; i < combinaisonATrouver.length(); i++) {
+            if (antiDoublon[i] == true) {
+                for (int j = 0; j < combinaisonJoueur.length(); j++) {
+                    if (i != j && combinaisonJoueur.charAt(i) == combinaisonATrouver.charAt(j)) {
+                        present++;
+                    }
+                }
+            }
+        }
+
         indiceTemp.append(present + " présent, " + bienPlace + " bien placé");
         indice = indiceTemp.toString();
         return indice;
-    }
-
-    public static int getBienPlace() {
-        return bienPlace;
-    }
-
-    public static int getPresent() {
-        return present;
     }
 }

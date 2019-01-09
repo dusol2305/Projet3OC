@@ -21,7 +21,6 @@ public class RechercheNb implements Jeu {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
 
-        //code copié
         Properties prop = new Properties();
         Reader in = null;
         try {
@@ -41,8 +40,8 @@ public class RechercheNb implements Jeu {
                 }
             }
         }
-        //code copié
         essaisRechercheNB = Integer.parseInt(prop.getProperty("rechercheNbessais"));
+        tailleRechercheNB = Integer.parseInt(prop.getProperty("rechercheNbLengh"));
 
         System.out.println("Nombre d'éssais : " + essaisRechercheNB);
     }

@@ -51,7 +51,44 @@ public class IAmastermind implements Joueur {
 
             String combinaisonATester = solutions.get(combI);
 
-            if (Mastermind.comparaison(combinaisonATester, combinaison).equals(indice)) {
+            //debut
+            int bienPlace = 0;
+            int present = 0;
+            boolean[] antiDoublon = new boolean[combinaison.length()];
+
+            for (int i = 0; i < antiDoublon.length; i++) {
+                antiDoublon[i] = true;
+            }
+
+            for (int i = 0; i < combinaison.length(); i++) {
+                if (combinaisonATester.charAt(i) == combinaison.charAt(i)) {
+                    bienPlace++;
+                    antiDoublon[i] = false;
+                }
+            }
+
+            for (int i = 0; i < combinaison.length(); i++) {
+                if (antiDoublon[i] == true) {
+                    for (int j = 0; j < combinaison.length(); j++) {
+                        if (i != j && antiDoublon[j] == true && combinaison.charAt(i) == combinaison.charAt(j)) {
+                            antiDoublon[j] = false;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < combinaison.length(); i++){
+                if (antiDoublon[i] == true){
+                    for (int j = 0; j < combinaisonATester.length(); j++){
+                        if (i != j && combinaison.charAt(i) == combinaisonATester.charAt(j)){
+                            present++;
+                        }
+                    }
+                }
+            }
+            //fin
+
+            if (Mastermind.getBienPlace() == bienPlace) {
                 combI++;
             } else {
                 solutions.remove(combinaisonATester);

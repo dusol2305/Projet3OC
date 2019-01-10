@@ -4,8 +4,6 @@ import Joueur.Joueur;
 import Main.Main;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 public class RechercheNb implements Jeu {
@@ -15,39 +13,21 @@ public class RechercheNb implements Jeu {
     private String indice;
 
     private int essaisRechercheNB;
-    private int tailleRechercheNB;
+    private static int tailleRechercheNB;
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
 
-        Properties prop = new Properties();
-        Reader in = null;
-        try {
-            in = new FileReader("src/ressources/config.properties");
+        essaisRechercheNB = Propriétée.rechercheNbTry;
+        tailleRechercheNB = Propriétée.rechercheNbLengh;
 
-            // load a properties file
-            prop.load(in);
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        essaisRechercheNB = Integer.parseInt(prop.getProperty("rechercheNbessais"));
-        tailleRechercheNB = Integer.parseInt(prop.getProperty("rechercheNbLengh"));
-
-        System.out.println("Nombre d'éssais : " + essaisRechercheNB);
+        System.out.println("Nombre d'éssais : " + essaisRechercheNB);//dell
     }
 
     @Override
     public void initialisation() {
+        System.out.println("Taille de la combinaison : " + Propriétée.rechercheNbLengh);
         combinaison = defenseur.demandeCombinaisonAleatoire();
         if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
@@ -58,6 +38,7 @@ public class RechercheNb implements Jeu {
     public void jouer() {
         indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
         attaquant.envoyerIndice(indice);
+        essaisRechercheNB--;
     }
 
     @Override
@@ -95,5 +76,13 @@ public class RechercheNb implements Jeu {
         }
         indice = indiceTemp.toString();
         return indice;
+    }
+
+    public static int getTailleRechercheNB() {
+        return tailleRechercheNB;
+    }
+
+    public static void setTailleRechercheNB(int tailleRechercheNB) { //dell
+        RechercheNb.tailleRechercheNB = tailleRechercheNB;
     }
 }

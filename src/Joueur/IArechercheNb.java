@@ -1,7 +1,20 @@
 package Joueur;
 
+import Jeux.Propriétée;
+import Jeux.RechercheNb;
+
 public class IArechercheNb implements Joueur {
-    private String combinaison = "4455";
+    private String combinaison;
+
+    public IArechercheNb () {
+
+        RechercheNb.setTailleRechercheNB(Propriétée.rechercheNbLengh);
+        StringBuilder combinaisonTemp = new StringBuilder();
+        for (int i = 0; i < RechercheNb.getTailleRechercheNB(); i++) {
+            combinaisonTemp.append(5);
+        }
+        combinaison = combinaisonTemp.toString();
+    }
 
     @Override
     public String demandeCombinaison() {
@@ -13,7 +26,7 @@ public class IArechercheNb implements Joueur {
         StringBuilder combinaisonTemp = new StringBuilder();
         String combinaison;
 
-        for (int i = 4; i > 0; i--) {
+        for (int i = RechercheNb.getTailleRechercheNB(); i > 0; i--) {
             combinaisonTemp.append((int) (Math.random() * 9 + 0));
         }
 

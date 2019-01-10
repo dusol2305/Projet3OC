@@ -112,7 +112,7 @@ public class MenuJeu {
             case 2: // Selection de RechercheNB
                 switch (choix[1]) { // choix du mode de Mastermind
                     case 1:
-                        Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb()); //remettre hum ia
+                        Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb());
                         rechercheNbChall.initialisation();
                         while (!rechercheNbChall.estFin()) {
                             rechercheNbChall.jouer();

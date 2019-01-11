@@ -9,7 +9,6 @@ public class Mastermind implements Jeu {
     private String combinaison;
     private static String indice;
 
-    private int mastermindLengh;
     private int mastermindTry;//contenue dans le fichier de propriétée
     private int mastermindColor;
 
@@ -21,7 +20,6 @@ public class Mastermind implements Jeu {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
 
-        mastermindLengh = Propriétée.mastermindLengh;
         mastermindTry = Propriétée.mastermindTry;
         mastermindColor = Propriétée.mastermindColor;
     }

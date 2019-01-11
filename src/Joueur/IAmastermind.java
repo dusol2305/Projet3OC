@@ -1,6 +1,7 @@
 package Joueur;
 
 import Jeux.Mastermind;
+import Jeux.Propriétée;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,21 +10,29 @@ public class IAmastermind implements Joueur {
     private List<String> solutions = new LinkedList<>();
     private String combinaison = "0000";
 
+    private int mastermindLengh = Propriétée.mastermindLengh;
+    private int mastermindColor = Propriétée.mastermindColor;
+
     public IAmastermind() {
-        char[] combinaisonTemp = {'0', '0', '0', '0'};
+        char[] combinaisonTemp = new char[mastermindLengh];
+        for (int i = 0; i < combinaisonTemp.length; i++){
+            combinaisonTemp[i] = '0';
+        }
 
         int i = combinaisonTemp.length - 1;
-        while (solutions.size() < 10000) {
+        int tailleSlutions = ((int) Math.pow(mastermindColor,mastermindLengh));
+        while (solutions.size() < tailleSlutions) {
             solutions.add(String.valueOf(combinaisonTemp));
-            while (i > -1 && combinaisonTemp[i] == '9') {
+            while (i > -1 && combinaisonTemp[i] == mastermindColor + 47) {
                 combinaisonTemp[i] = '0';
                 i--;
             }
-            if (i > -1 && combinaisonTemp[i] < '9') {
+            if (i > -1 && combinaisonTemp[i] < mastermindColor + 47) {
                 combinaisonTemp[i]++;
             }
             i = combinaisonTemp.length - 1;
         }
+        System.out.println(solutions + "\ntaille solution : " + solutions.size());
     }
 
     @Override

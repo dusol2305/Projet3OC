@@ -8,7 +8,11 @@ public class Mastermind implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private static String indice;
-    private int essaisMastermind = 15;
+
+    private int mastermindLengh;
+    private int mastermindTry;//contenue dans le fichier de propriétée
+    private int mastermindColor;
+
     private static int bienPlace = 0;
     private static int present = 0;
 
@@ -16,11 +20,17 @@ public class Mastermind implements Jeu {
     public Mastermind(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
+
+        mastermindLengh = Propriétée.mastermindLengh;
+        mastermindTry = Propriétée.mastermindTry;
+        mastermindColor = Propriétée.mastermindColor;
     }
 
     @Override
     public void initialisation() {
         combinaison = defenseur.demandeCombinaisonAleatoire();
+        System.out.println("Taille de la combinaison : " + mastermindTry);
+        System.out.println("Nombre de couleur : " + mastermindColor);
         if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
         }
@@ -28,14 +38,16 @@ public class Mastermind implements Jeu {
 
     @Override
     public void jouer() {
+        System.out.println("il reste "+ mastermindTry +" essais");
         String combinaisonJoueur = attaquant.demandeCombinaison();
         indice = this.comparaison(combinaisonJoueur, combinaison);
         attaquant.envoyerIndice(indice);
+        mastermindTry--;
     }
 
     @Override
     public boolean estFin() {
-        if (essaisMastermind > 0) {
+        if (mastermindTry > 0) {
             if (bienPlace == combinaison.length()) {
                 attaquant.affichageResultatPartie(true);
                 return false;

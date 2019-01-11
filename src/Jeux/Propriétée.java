@@ -13,15 +13,12 @@ public class Propriétée {
     public static int rechercheNbLengh;
     public static int rechercheNbTry;
 
-    public Propriétée() {
+    private Propriétée() {
         Properties prop = new Properties();
         Reader in = null;
         try {
             in = new FileReader("src/ressources/config.properties");
-
-            // load a properties file
             prop.load(in);
-
         } catch (
                 IOException ex) {
             ex.printStackTrace();
@@ -41,5 +38,13 @@ public class Propriétée {
 
         rechercheNbLengh = Integer.parseInt(prop.getProperty("rechercheNbLengh"));
         rechercheNbTry = Integer.parseInt(prop.getProperty("rechercheNbTry"));
+    }
+
+    private static Propriétée Propriétée = null;
+    public static synchronized Propriétée getInstance() {
+        if (Propriétée == null) {
+            Propriétée = new Propriétée();
+        }
+        return Propriétée;
     }
 }

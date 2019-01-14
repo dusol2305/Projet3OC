@@ -3,6 +3,9 @@ package Jeux;
 import Joueur.Joueur;
 import Main.Main;
 
+import java.sql.Array;
+import java.util.*;
+
 public class Mastermind implements Jeu {
     private Joueur attaquant;
     private Joueur defenseur;
@@ -36,9 +39,16 @@ public class Mastermind implements Jeu {
 
     @Override
     public void jouer() {
-        System.out.println("il reste "+ mastermindTry +" essais");
+        StringBuilder indiceTemp = new StringBuilder();
+
+        System.out.println("il reste " + mastermindTry + " essais");
         String combinaisonJoueur = attaquant.demandeCombinaison();
-        indice = this.comparaison(combinaisonJoueur, combinaison);
+        present = 0;
+        bienPlace = 0;
+        int[] resultatComparaison = this.comparaison(combinaisonJoueur, combinaison);
+
+        indiceTemp.append("present " + resultatComparaison[0] + " bien placé" + resultatComparaison[1]);
+        indice = indiceTemp.toString();
         attaquant.envoyerIndice(indice);
         mastermindTry--;
     }
@@ -57,46 +67,33 @@ public class Mastermind implements Jeu {
         return true;
     }
 
-    public static String comparaison(String combinaisonProposée, String combinaisonATrouver) {
-        bienPlace = 0;
-        present = 0;
-        boolean[] antiDoublon = new boolean[combinaisonATrouver.length()];
-        String indice;
-        StringBuilder indiceTemp = new StringBuilder();
+    public static int[] comparaison(String combinaisonProposee, String combinaisonATrouver) {
+        int present = 0;
+        int bienPlace = 0;
+        int[] indice = new int[2];
 
-        for (int i = 0; i < antiDoublon.length; i++) {
-            antiDoublon[i] = true;
+        Set<Character> combinaisonProposeeSansDoublon = new HashSet<>();
+        for (int i = 0; i < combinaisonProposee.length(); i++) {
+            combinaisonProposeeSansDoublon.add(combinaisonProposee.charAt(i));
         }
 
         for (int i = 0; i < combinaisonATrouver.length(); i++) {
-            if (combinaisonProposée.charAt(i) == combinaisonATrouver.charAt(i)) {
+            if (combinaisonProposee.charAt(i) == combinaisonATrouver.charAt(i)) {
                 bienPlace++;
-                antiDoublon[i] = false;
+                combinaisonProposeeSansDoublon.remove(combinaisonATrouver.charAt(i));
+
             }
         }
 
         for (int i = 0; i < combinaisonATrouver.length(); i++) {
-            if (antiDoublon[i] == true) {
-                for (int j = 0; j < combinaisonATrouver.length(); j++) {
-                    if (i != j && antiDoublon[j] == true && combinaisonATrouver.charAt(i) == combinaisonATrouver.charAt(j)) {
-                        antiDoublon[j] = false;
-                    }
-                }
+            if (combinaisonProposeeSansDoublon.contains(combinaisonATrouver.charAt(i))) {
+                present++;
+                combinaisonProposeeSansDoublon.remove(combinaisonATrouver.charAt(i));
             }
         }
 
-        for (int i = 0; i < combinaisonATrouver.length(); i++){
-            if (antiDoublon[i] == true){
-                for (int j = 0; j < combinaisonProposée.length(); j++){
-                    if (i != j && combinaisonATrouver.charAt(i) == combinaisonProposée.charAt(j)){
-                        present++;
-                    }
-                }
-            }
-        }
-
-        indiceTemp.append(present + " présent, " + bienPlace + " bien placé");
-        indice = indiceTemp.toString();
+        indice[0] = present;
+        indice[1] = bienPlace;
         return indice;
     }
 

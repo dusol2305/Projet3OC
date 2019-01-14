@@ -15,12 +15,12 @@ public class IAmastermind implements Joueur {
 
     public IAmastermind() {
         char[] combinaisonTemp = new char[mastermindLengh];
-        for (int i = 0; i < combinaisonTemp.length; i++){
+        for (int i = 0; i < combinaisonTemp.length; i++) {
             combinaisonTemp[i] = '0';
         }
 
         int i = combinaisonTemp.length - 1;
-        int tailleSlutions = ((int) Math.pow(mastermindColor,mastermindLengh));
+        int tailleSlutions = ((int) Math.pow(mastermindColor, mastermindLengh));
         while (solutions.size() < tailleSlutions) {
             solutions.add(String.valueOf(combinaisonTemp));
             while (i > -1 && combinaisonTemp[i] == mastermindColor + 47) {
@@ -43,14 +43,7 @@ public class IAmastermind implements Joueur {
 
     @Override
     public String demandeCombinaisonAleatoire() {
-        StringBuilder combinaisonTemp = new StringBuilder();
-
-        for (int i = 4; i > 0; i--) {
-            combinaisonTemp.append((int) (Math.random() * 9 + 0));
-        }
-        combinaison = combinaisonTemp.toString();
-
-        return combinaison;
+        return demandeCombinaison();
     }
 
     @Override
@@ -60,44 +53,9 @@ public class IAmastermind implements Joueur {
 
             String combinaisonATester = solutions.get(combI);
 
-            //debut
-            int bienPlace = 0;
-            int present = 0;
-            boolean[] antiDoublon = new boolean[combinaison.length()];
+            int[] comparaison = Mastermind.comparaison(combinaisonATester, combinaison);
 
-            for (int i = 0; i < antiDoublon.length; i++) {
-                antiDoublon[i] = true;
-            }
-
-            for (int i = 0; i < combinaison.length(); i++) {
-                if (combinaisonATester.charAt(i) == combinaison.charAt(i)) {
-                    bienPlace++;
-                    antiDoublon[i] = false;
-                }
-            }
-
-            for (int i = 0; i < combinaison.length(); i++) {
-                if (antiDoublon[i] == true) {
-                    for (int j = 0; j < combinaison.length(); j++) {
-                        if (i != j && antiDoublon[j] == true && combinaison.charAt(i) == combinaison.charAt(j)) {
-                            antiDoublon[j] = false;
-                        }
-                    }
-                }
-            }
-
-            for (int i = 0; i < combinaison.length(); i++){
-                if (antiDoublon[i] == true){
-                    for (int j = 0; j < combinaisonATester.length(); j++){
-                        if (i != j && combinaison.charAt(i) == combinaisonATester.charAt(j)){
-                            present++;
-                        }
-                    }
-                }
-            }
-            //fin
-
-            if (Mastermind.getBienPlace() == bienPlace) {
+            if (comparaison[0] == Mastermind.getPresent() && comparaison[1] == Mastermind.getBienPlace()) {
                 combI++;
             } else {
                 solutions.remove(combinaisonATester);

@@ -11,13 +11,10 @@ public class Mastermind implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private static String indice;
+    private static int[] resultatComparaison = new int[2];
 
     private int mastermindTry;//contenue dans le fichier de propriétée
     private int mastermindColor;
-
-    private static int bienPlace = 0;
-    private static int present = 0;
-
 
     public Mastermind(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
@@ -30,7 +27,6 @@ public class Mastermind implements Jeu {
     @Override
     public void initialisation() {
         combinaison = defenseur.demandeCombinaisonAleatoire();
-        System.out.println("Taille de la combinaison : " + mastermindTry);
         System.out.println("Nombre de couleur : " + mastermindColor);
         if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
@@ -43,11 +39,9 @@ public class Mastermind implements Jeu {
 
         System.out.println("il reste " + mastermindTry + " essais");
         String combinaisonJoueur = attaquant.demandeCombinaison();
-        present = 0;
-        bienPlace = 0;
-        int[] resultatComparaison = this.comparaison(combinaisonJoueur, combinaison);
+        resultatComparaison = this.comparaison(combinaisonJoueur, combinaison);
 
-        indiceTemp.append("present " + resultatComparaison[0] + " bien placé" + resultatComparaison[1]);
+        indiceTemp.append(resultatComparaison[0] + " present / " + resultatComparaison[1] + " bien place\n");
         indice = indiceTemp.toString();
         attaquant.envoyerIndice(indice);
         mastermindTry--;
@@ -56,7 +50,7 @@ public class Mastermind implements Jeu {
     @Override
     public boolean estFin() {
         if (mastermindTry > 0) {
-            if (bienPlace == combinaison.length()) {
+            if (resultatComparaison[1] == combinaison.length()) {
                 attaquant.affichageResultatPartie(true);
                 return false;
             }
@@ -98,10 +92,10 @@ public class Mastermind implements Jeu {
     }
 
     public static int getBienPlace() {
-        return bienPlace;
+        return resultatComparaison[1];
     }
 
     public static int getPresent() {
-        return present;
+        return resultatComparaison[0];
     }
 }

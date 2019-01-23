@@ -3,10 +3,13 @@ package Jeux;
 import Joueur.Humain;
 import Joueur.IAmastermind;
 import Joueur.IArechercheNb;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 public class MenuJeu {
+    private static Logger logger = LogManager.getLogger(MenuJeu.class);
     private boolean quitter = true;
     private static byte[] choix = {0, 0};
 

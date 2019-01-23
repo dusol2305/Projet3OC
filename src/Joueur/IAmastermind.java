@@ -1,17 +1,22 @@
 package Joueur;
 
 import Jeux.Mastermind;
-import Jeux.Propriétée;
+import Jeux.Proprietee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IAmastermind implements Joueur {
+    private static Logger logger = LogManager.getLogger(IAmastermind.class);
     private List<String> solutions = new LinkedList<>();
     private String combinaison = "0000";
 
-    private int mastermindLengh = Propriétée.mastermindLengh;
-    private int mastermindColor = Propriétée.mastermindColor;
+    private int mastermindLengh = Proprietee.mastermindLengh;
+    private int mastermindColor = Proprietee.mastermindColor;
 
     public IAmastermind() {
         char[] combinaisonTemp = new char[mastermindLengh];
@@ -32,7 +37,6 @@ public class IAmastermind implements Joueur {
             }
             i = combinaisonTemp.length - 1;
         }
-        System.out.println(solutions + "\ntaille solution : " + solutions.size());
     }
 
     @Override
@@ -48,6 +52,13 @@ public class IAmastermind implements Joueur {
 
     @Override
     public void envoyerIndice(String indice) {
+        int jeuBienPlace;
+        int jeuPresent;
+        Pattern p = Pattern.compile("(\\d).+(\\d).+");
+        Matcher m = p.matcher(indice);
+        m.find();
+        jeuPresent = Integer.parseInt(m.group(1));
+        jeuBienPlace = Integer.parseInt(m.group(2));
 
         for (int combI = 0; combI < solutions.size(); ) { //retire de la liste des solutions, les solutions qui ne sont pas des possibilitées de réponse.
 
@@ -55,7 +66,7 @@ public class IAmastermind implements Joueur {
 
             int[] comparaison = Mastermind.comparaison(combinaisonATester, combinaison);
 
-            if (comparaison[0] == Mastermind.getPresent() && comparaison[1] == Mastermind.getBienPlace()) {
+            if (comparaison[0] == jeuPresent && comparaison[1] == jeuBienPlace) {
                 combI++;
             } else {
                 solutions.remove(combinaisonATester);

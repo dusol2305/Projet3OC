@@ -2,11 +2,11 @@ package Jeux;
 
 import Joueur.Joueur;
 import Main.Main;
-
-import java.io.*;
-import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RechercheNb implements Jeu {
+    private static Logger logger = LogManager.getLogger(RechercheNb.class);
     private Joueur attaquant;
     private Joueur defenseur;
     private String combinaison;
@@ -19,15 +19,15 @@ public class RechercheNb implements Jeu {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
 
-        essaisRechercheNB = Propriétée.rechercheNbTry;
-        tailleRechercheNB = Propriétée.rechercheNbLengh;
+        essaisRechercheNB = Proprietee.rechercheNbTry;
+        tailleRechercheNB = Proprietee.rechercheNbLengh;
 
         System.out.println("Nombre d'éssais : " + essaisRechercheNB);//dell
     }
 
     @Override
     public void initialisation() {
-        System.out.println("Taille de la combinaison : " + Propriétée.rechercheNbLengh);
+        System.out.println("Taille de la combinaison : " + Proprietee.rechercheNbLengh);
         combinaison = defenseur.demandeCombinaisonAleatoire();
         if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);

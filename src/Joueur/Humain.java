@@ -1,8 +1,12 @@
 package Joueur;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 
 public class Humain implements Joueur {
+    private static Logger logger = LogManager.getLogger(Humain.class);
     private String combinaison;
     @Override
     public String demandeCombinaison() {

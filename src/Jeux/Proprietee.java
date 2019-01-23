@@ -1,11 +1,15 @@
 package Jeux;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Properties;
 
-public class Propriétée {
+public class Proprietee {
+    private static Logger logger = LogManager.getLogger(Proprietee.class);
     public static int mastermindLengh;
     public static int mastermindTry;
     public static int mastermindColor;
@@ -13,7 +17,9 @@ public class Propriétée {
     public static int rechercheNbLengh;
     public static int rechercheNbTry;
 
-    private Propriétée() {
+    public static boolean devMod = false;
+
+    private Proprietee() {
         Properties prop = new Properties();
         Reader in = null;
         try {
@@ -38,13 +44,16 @@ public class Propriétée {
 
         rechercheNbLengh = Integer.parseInt(prop.getProperty("rechercheNbLengh"));
         rechercheNbTry = Integer.parseInt(prop.getProperty("rechercheNbTry"));
+        if (prop.getProperty("devmod").equals("true")) {
+            devMod = true;
+        }
     }
 
-    private static Propriétée Propriétée = null;
-    public static synchronized Propriétée getInstance() {
-        if (Propriétée == null) {
-            Propriétée = new Propriétée();
+    private static Proprietee Proprietee = null;
+    public static synchronized Proprietee getInstance() {
+        if (Proprietee == null) {
+            Proprietee = new Proprietee();
         }
-        return Propriétée;
+        return Proprietee;
     }
 }

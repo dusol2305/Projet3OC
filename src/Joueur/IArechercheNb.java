@@ -1,14 +1,18 @@
 package Joueur;
 
-import Jeux.Propriétée;
+import Jeux.Mastermind;
+import Jeux.Proprietee;
 import Jeux.RechercheNb;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class IArechercheNb implements Joueur {
+    private static Logger logger = LogManager.getLogger(IArechercheNb.class);
     private String combinaison;
 
     public IArechercheNb () {
 
-        RechercheNb.setTailleRechercheNB(Propriétée.rechercheNbLengh);
+        RechercheNb.setTailleRechercheNB(Proprietee.rechercheNbLengh);
         StringBuilder combinaisonTemp = new StringBuilder();
         for (int i = 0; i < RechercheNb.getTailleRechercheNB(); i++) {
             combinaisonTemp.append(5);

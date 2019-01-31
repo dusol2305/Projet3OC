@@ -1,4 +1,4 @@
-package Joueur;
+package com.tdevlee.Joueur;
 
 public interface Joueur {
     String demandeCombinaison();

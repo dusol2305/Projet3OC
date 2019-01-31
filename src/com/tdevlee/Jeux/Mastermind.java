@@ -1,7 +1,7 @@
-package Jeux;
+package com.tdevlee.Jeux;
 
-import Joueur.Joueur;
-import Main.Main;
+import com.tdevlee.Joueur.Joueur;
+import com.tdevlee.Main.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,8 +34,8 @@ public class Mastermind implements Jeu {
         System.out.println("Nombre de couleur : " + mastermindColor);
         System.out.println("Taille de la combinaison : " + mastermindLengh);
 
-        combinaisonValide = true;
-        while (combinaisonValide) {
+        combinaisonValide = false;
+        while (!combinaisonValide) {
             combinaison = this.verificationCombinaison(defenseur.demandeCombinaisonAleatoire());
         }
 
@@ -110,16 +110,16 @@ public class Mastermind implements Jeu {
 
     private String verificationCombinaison(String combinaison) {
         int validColor = mastermindColor - 1;
-            combinaisonValide = false;
+            combinaisonValide = true;
             if (combinaison.length() != mastermindLengh){
                 System.out.println("Taille de la combinaison incorrecte. Taille de la combinaison à entrer : " + mastermindLengh);
-                combinaisonValide = true;
+                combinaisonValide = false;
             }
 
             for (int i = 0; i< combinaison.length(); i++){
-                if (combinaison.charAt(i) > mastermindColor+48 || combinaison.charAt(i) < '0'){
+                if (combinaison.charAt(i) > mastermindColor+47 || combinaison.charAt(i) < '0'){
                     System.out.println("Couleur incorrecte. Couleurs de la combinaison à entrer cmprise entre 0 et " + validColor);
-                    combinaisonValide = true;
+                    combinaisonValide = false;
                 }
             }
         return combinaison;

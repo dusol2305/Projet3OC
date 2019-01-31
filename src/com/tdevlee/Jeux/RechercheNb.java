@@ -1,7 +1,7 @@
-package Jeux;
+package com.tdevlee.Jeux;
 
-import Joueur.Joueur;
-import Main.Main;
+import com.tdevlee.Joueur.Joueur;
+import com.tdevlee.Main.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,9 +11,10 @@ public class RechercheNb implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private String indice;
+    boolean combinaisonAttaquantValide = false;
 
     private int essaisRechercheNB;
-    private static int tailleRechercheNB;
+    private int tailleRechercheNB;
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
@@ -36,14 +37,21 @@ public class RechercheNb implements Jeu {
 
     @Override
     public void jouer() {
-        indice = this.comparaison(attaquant.demandeCombinaison(), combinaison);
+        String combinaisonAttaquant = null;
+
+        combinaisonAttaquantValide = false;
+        while (!combinaisonAttaquantValide) {
+            combinaisonAttaquant = verificationCombinaisonAttaquant(attaquant.demandeCombinaison());
+        }
+
+        indice = this.comparaison(combinaisonAttaquant, combinaison);
         attaquant.envoyerIndice(indice);
         essaisRechercheNB--;
     }
 
     @Override
     public boolean estFin() {
-        if (indice == null){
+        if (indice == null) {
             return false;
         }
         if (essaisRechercheNB > 0) {
@@ -78,11 +86,15 @@ public class RechercheNb implements Jeu {
         return indice;
     }
 
-    public static int getTailleRechercheNB() {
-        return tailleRechercheNB;
-    }
-
-    public static void setTailleRechercheNB(int tailleRechercheNB) { //dell
-        RechercheNb.tailleRechercheNB = tailleRechercheNB;
+    String verificationCombinaisonAttaquant(String combinaisonAttaquant) {
+        combinaisonAttaquantValide = true;
+        if (combinaisonAttaquant.length() > tailleRechercheNB){
+            System.out.println("taille de la combinaison entrée supérieur à la taille requise. Taille requise : " + tailleRechercheNB);
+            combinaisonAttaquantValide = false;
+        } else if (combinaisonAttaquant.length() < tailleRechercheNB){
+            System.out.println("taille de la combinaison entrée inférieur à la taille requise. Taille requise : " + tailleRechercheNB);
+            combinaisonAttaquantValide = false;
+        }
+        return combinaisonAttaquant;
     }
 }

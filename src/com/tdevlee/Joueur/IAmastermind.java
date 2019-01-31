@@ -1,7 +1,7 @@
-package Joueur;
+package com.tdevlee.Joueur;
 
-import Jeux.Mastermind;
-import Jeux.Proprietee;
+import com.tdevlee.Jeux.Mastermind;
+import com.tdevlee.Jeux.Proprietee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package Jeux;
+package com.tdevlee.Jeux;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,8 +25,7 @@ public class Proprietee {
         try {
             in = new FileReader("src/ressources/config.properties");
             prop.load(in);
-        } catch (
-                IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         } finally {
             if (in != null) {

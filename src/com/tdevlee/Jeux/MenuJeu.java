@@ -1,8 +1,8 @@
-package Jeux;
+package com.tdevlee.Jeux;
 
-import Joueur.Humain;
-import Joueur.IAmastermind;
-import Joueur.IArechercheNb;
+import com.tdevlee.Joueur.Humain;
+import com.tdevlee.Joueur.IAmastermind;
+import com.tdevlee.Joueur.IArechercheNb;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,7 +1,7 @@
-package com.tdevlee.Joueur;
+package com.tdevlee.joueur;
 
-import com.tdevlee.Jeux.Mastermind;
-import com.tdevlee.Jeux.Proprietee;
+import com.tdevlee.jeux.Mastermind;
+import com.tdevlee.helpers.Proprietee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,6 +37,7 @@ public class IAmastermind implements Joueur {
             }
             i = combinaisonTemp.length - 1;
         }
+        logger.debug("Nombre de solution possible : " + solutions.size());
     }
 
     @Override
@@ -72,6 +73,7 @@ public class IAmastermind implements Joueur {
                 solutions.remove(combinaisonATester);
             }
         }
+        logger.debug("Nombre de solutions restante : " + solutions.size());
         solutions.remove(combinaison);
         System.out.print("Proposition : " + combinaison + " -> ");
         System.out.println(indice);
@@ -80,8 +82,10 @@ public class IAmastermind implements Joueur {
     @Override
     public void affichageResultatPartie(boolean aGagne) {
         if (aGagne) {
+            logger.info("IAmastermind a gagné");
             System.out.println("IAmastermind Gagné");
         } else {
+            logger.info("IAmastermind a perdu");
             System.out.println("IAmastermind Perdu");
         }
     }

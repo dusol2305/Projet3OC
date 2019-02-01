@@ -1,8 +1,8 @@
-package com.tdevlee.Jeux;
+package com.tdevlee.jeux;
 
-import com.tdevlee.Joueur.Humain;
-import com.tdevlee.Joueur.IAmastermind;
-import com.tdevlee.Joueur.IArechercheNb;
+import com.tdevlee.joueur.Humain;
+import com.tdevlee.joueur.IAmastermind;
+import com.tdevlee.joueur.IArechercheNb;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -81,8 +81,9 @@ public class MenuJeu {
 
         switch (choix[0]) {
             case 1: // Selection de Mastermind
-                switch (choix[1]) { // choix du mode de RechercherNb
+                switch (choix[1]) { // choix du mode de Mastermind
                     case 1:
+                        logger.info("Lancement mastermind challenger");
                         Jeu mastermindChall = new Mastermind(new Humain(), new IAmastermind());
                         mastermindChall.initialisation();
                         while (mastermindChall.estFin()) {
@@ -90,6 +91,7 @@ public class MenuJeu {
                         }
                         break;
                     case 2:
+                        logger.info("Lancement mastermind defenseur");
                         Jeu mastermindDef = new Mastermind(new IAmastermind(), new Humain());
                         mastermindDef.initialisation();
                         while (mastermindDef.estFin()) {
@@ -97,6 +99,7 @@ public class MenuJeu {
                         }
                         break;
                     case 3:
+                        logger.info("Lancement mastermind duel");
                         Jeu mastermindDuel1 = new Mastermind(new Humain(), new IAmastermind());
                         Jeu mastermindDuel2 = new Mastermind(new IAmastermind(), new Humain());
                         mastermindDuel1.initialisation();
@@ -108,13 +111,15 @@ public class MenuJeu {
                         break;
                     default:
                         System.err.println("erreur dans la selection du mode");
+                        logger.error("Erreur lors de la selection du mode de jeux");
                         break;
                 }
                 break;
 
             case 2: // Selection de RechercheNB
-                switch (choix[1]) { // choix du mode de Mastermind
+                switch (choix[1]) { // choix du mode de RechercheNB
                     case 1:
+                        logger.info("Lancement rechercheNB challenger");
                         Jeu rechercheNbChall = new RechercheNb(new Humain(), new IArechercheNb());
                         rechercheNbChall.initialisation();
                         while (!rechercheNbChall.estFin()) {
@@ -122,6 +127,7 @@ public class MenuJeu {
                         }
                         break;
                     case 2:
+                        logger.info("Lancement rechercheNB defenseur");
                         Jeu rechercheNbDef = new RechercheNb(new IArechercheNb(), new Humain());
                         rechercheNbDef.initialisation();
                         while (!rechercheNbDef.estFin()) {
@@ -129,6 +135,7 @@ public class MenuJeu {
                         }
                         break;
                     case 3:
+                        logger.info("Lancement rechercheNB duel");
                         Jeu rechercheNbDuel1 = new RechercheNb(new Humain(), new IArechercheNb());
                         Jeu rechercheNbDuel2 = new RechercheNb(new IArechercheNb(), new Humain());
                         rechercheNbDuel1.initialisation();
@@ -144,6 +151,7 @@ public class MenuJeu {
                 break;
             default:
                 System.err.println("erreur dans la selection du jeu");
+                logger.error("Erreur lors de la selection du jeux");
                 break;
         }
     }
@@ -169,6 +177,7 @@ public class MenuJeu {
                     case 3:
                         quitter = false;
                         choixValide = false;
+                        logger.info("Fermeture de l'application");
                         break;
                     default:
                         System.out.println("Veuillez choisir entre 1 et 3");

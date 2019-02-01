@@ -1,4 +1,4 @@
-package com.tdevlee.Jeux;
+package com.tdevlee.helpers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,16 +23,16 @@ public class Proprietee {
         Properties prop = new Properties();
         Reader in = null;
         try {
-            in = new FileReader("src/ressources/config.properties");
+            in = new FileReader("main/src/ressources/config.properties");
             prop.load(in);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("Erreur lors de l'ouverture du fichier de propriétée");
         } finally {
             if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Impossible de fermé le fichier de propriétée");
                 }
             }
         }

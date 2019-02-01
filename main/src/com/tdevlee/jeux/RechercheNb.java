@@ -1,7 +1,8 @@
-package com.tdevlee.Jeux;
+package com.tdevlee.jeux;
 
-import com.tdevlee.Joueur.Joueur;
-import com.tdevlee.Main.Main;
+import com.tdevlee.helpers.Proprietee;
+import com.tdevlee.joueur.Joueur;
+import com.tdevlee.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,26 +14,31 @@ public class RechercheNb implements Jeu {
     private String indice;
     boolean combinaisonAttaquantValide = false;
 
-    private int essaisRechercheNB;
-    private int tailleRechercheNB;
+    private int rechercheNbTry;
+    private int rechercheNbLengh;
 
     public RechercheNb(Joueur attaquant, Joueur defenseur) {
         this.attaquant = attaquant;
         this.defenseur = defenseur;
 
-        essaisRechercheNB = Proprietee.rechercheNbTry;
-        tailleRechercheNB = Proprietee.rechercheNbLengh;
-
-        System.out.println("Nombre d'éssais : " + essaisRechercheNB);//dell
+        rechercheNbTry = Proprietee.rechercheNbTry;
+        rechercheNbLengh = Proprietee.rechercheNbLengh;
     }
 
     @Override
     public void initialisation() {
+        System.out.println("Nombre d'éssais : " + rechercheNbTry);
         System.out.println("Taille de la combinaison : " + Proprietee.rechercheNbLengh);
-        combinaison = defenseur.demandeCombinaisonAleatoire();
+
+        combinaisonAttaquantValide = false;
+        while (!combinaisonAttaquantValide) {
+            combinaison = verificationCombinaison(defenseur.demandeCombinaisonAleatoire());
+        }
+
         if (Main.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
         }
+        logger.debug("Iniitalisation de RechercheNb. Combinaison : " + combinaison + ". Nombre d'essais : " + rechercheNbTry + ". Taille de la combinaison : " + rechercheNbLengh);
     }
 
     @Override
@@ -41,12 +47,13 @@ public class RechercheNb implements Jeu {
 
         combinaisonAttaquantValide = false;
         while (!combinaisonAttaquantValide) {
-            combinaisonAttaquant = verificationCombinaisonAttaquant(attaquant.demandeCombinaison());
+            combinaisonAttaquant = verificationCombinaison(attaquant.demandeCombinaison());
         }
 
         indice = this.comparaison(combinaisonAttaquant, combinaison);
+        logger.debug("Indice : " + indice);
         attaquant.envoyerIndice(indice);
-        essaisRechercheNB--;
+        rechercheNbTry--;
     }
 
     @Override
@@ -54,7 +61,7 @@ public class RechercheNb implements Jeu {
         if (indice == null) {
             return false;
         }
-        if (essaisRechercheNB > 0) {
+        if (rechercheNbTry >= 0) {
             int i = indice.length() - 1;
             while (i > -1) {
                 if (indice.charAt(i) == '=') {
@@ -86,13 +93,15 @@ public class RechercheNb implements Jeu {
         return indice;
     }
 
-    String verificationCombinaisonAttaquant(String combinaisonAttaquant) {
+    String verificationCombinaison(String combinaisonAttaquant) {
         combinaisonAttaquantValide = true;
-        if (combinaisonAttaquant.length() > tailleRechercheNB){
-            System.out.println("taille de la combinaison entrée supérieur à la taille requise. Taille requise : " + tailleRechercheNB);
+        if (combinaisonAttaquant.length() > rechercheNbLengh){
+            System.out.println("taille de la combinaison entrée supérieur à la taille requise. Taille requise : " + rechercheNbLengh);
+            logger.warn("Taille de la combinaison entrée supérieur à la taille requise");
             combinaisonAttaquantValide = false;
-        } else if (combinaisonAttaquant.length() < tailleRechercheNB){
-            System.out.println("taille de la combinaison entrée inférieur à la taille requise. Taille requise : " + tailleRechercheNB);
+        } else if (combinaisonAttaquant.length() < rechercheNbLengh){
+            logger.warn("Taille de la combinaison entrée inférieur à la taille requise.");
+            System.out.println("taille de la combinaison entrée inférieur à la taille requise. Taille requise : " + rechercheNbLengh);
             combinaisonAttaquantValide = false;
         }
         return combinaisonAttaquant;

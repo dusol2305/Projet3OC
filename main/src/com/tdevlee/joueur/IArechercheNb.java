@@ -1,7 +1,6 @@
-package com.tdevlee.Joueur;
+package com.tdevlee.joueur;
 
-import com.tdevlee.Jeux.Proprietee;
-import com.tdevlee.Jeux.RechercheNb;
+import com.tdevlee.helpers.Proprietee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,8 +31,8 @@ public class IArechercheNb implements Joueur {
         for (int i = rechercheNBLengh; i > 0; i--) {
             combinaisonTemp.append((int) (Math.random() * 9 + 0));
         }
-
         combinaison = combinaisonTemp.toString();
+        logger.debug("IAmastermind combinaison aléatoire : " + combinaison);
         return combinaison;
     }
 
@@ -58,8 +57,10 @@ public class IArechercheNb implements Joueur {
     @Override
     public void affichageResultatPartie(boolean aGagne) {
         if (aGagne) {
+            logger.info("IARechercheNb a gagné");
             System.out.println("IArechercheNb Gagné");
         } else {
+            logger.info("IARechercheNb a perdu");
             System.out.println("IArechercheNb Perdu");
         }
     }

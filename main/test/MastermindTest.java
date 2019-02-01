@@ -1,12 +1,11 @@
-package com.tdevlee.Jeux;
-
+import com.tdevlee.jeux.Mastermind;
 import org.junit.Assert;
 
 public class MastermindTest {
 
     @org.junit.Test
     public void comparaisonIdentique() {
-        Assert.assertArrayEquals(new int[]{0,4},Mastermind.comparaison("1234","1234"));
+        Assert.assertArrayEquals(new int[]{0,4}, Mastermind.comparaison("1234","1234"));
     }
     @org.junit.Test
     public void comparaison4EnDoule() {

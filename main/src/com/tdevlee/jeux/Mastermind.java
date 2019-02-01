@@ -1,7 +1,8 @@
-package com.tdevlee.Jeux;
+package com.tdevlee.jeux;
 
-import com.tdevlee.Joueur.Joueur;
-import com.tdevlee.Main.Main;
+import com.tdevlee.helpers.Proprietee;
+import com.tdevlee.joueur.Joueur;
+import com.tdevlee.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +32,8 @@ public class Mastermind implements Jeu {
 
     @Override
     public void initialisation() {
-        System.out.println("Nombre de couleur : " + mastermindColor);
+        System.out.println("Nombre d'essais : " + mastermindTry);
+        System.out.println("Nombre de couleurs : " + mastermindColor);
         System.out.println("Taille de la combinaison : " + mastermindLengh);
 
         combinaisonValide = false;
@@ -42,6 +44,7 @@ public class Mastermind implements Jeu {
         if (Main.devMod || Proprietee.devMod) {
             System.out.println("Combinaison à trouver : " + combinaison);
         }
+        logger.debug("Iniitalisation de mastermind. Combinaison : " + combinaison + ". Nombre de couleurs : " + mastermindColor + ". Nombre d'essais : " + mastermindTry);
     }
 
     @Override
@@ -51,22 +54,24 @@ public class Mastermind implements Jeu {
         System.out.println("il reste " + mastermindTry + " essais");
         String combinaisonJoueur = null;
 
-        combinaisonValide = true;
-        while (combinaisonValide) {
+        combinaisonValide = false;
+        while (!combinaisonValide) {
             combinaisonJoueur = this.verificationCombinaison(attaquant.demandeCombinaison());
         }
+        logger.info("combinaison du joueur : " + combinaisonJoueur);
 
-        resultatComparaison = this.comparaison(combinaisonJoueur, combinaison);
-
+        resultatComparaison = Mastermind.comparaison(combinaisonJoueur, combinaison);
+        logger.info("resultat de la comparaison : " + resultatComparaison);
         indiceTemp.append(resultatComparaison[0] + " présent, " + resultatComparaison[1] + " bien placé\n");
         indice = indiceTemp.toString();
         attaquant.envoyerIndice(indice);
+        logger.debug("indice : " + indice +" | combinaison joueur : " + combinaisonJoueur + " | combinaison du jeu : "+ combinaison);
         mastermindTry--;
     }
 
     @Override
     public boolean estFin() {
-        if (mastermindTry > 0) {
+        if (mastermindTry >= 0) {
             if (resultatComparaison[1] == combinaison.length()) {
                 attaquant.affichageResultatPartie(true);
                 return false;
@@ -110,18 +115,26 @@ public class Mastermind implements Jeu {
 
     private String verificationCombinaison(String combinaison) {
         int validColor = mastermindColor - 1;
-            combinaisonValide = true;
-            if (combinaison.length() != mastermindLengh){
-                System.out.println("Taille de la combinaison incorrecte. Taille de la combinaison à entrer : " + mastermindLengh);
+        boolean colorIncorrect = false;
+        combinaisonValide = true;
+        if (combinaison.length() != mastermindLengh) {
+            System.out.println("Taille de la combinaison incorrecte. Taille de la combinaison à entrer : " + mastermindLengh);
+            logger.warn("Taille de la combinaison saisie incorrecte");
+            combinaisonValide = false;
+        }
+
+        for (int i = 0; i < combinaison.length(); i++) {
+            if (combinaison.charAt(i) > mastermindColor + 47 || combinaison.charAt(i) < '0') {
+                colorIncorrect = true;
                 combinaisonValide = false;
             }
+        }
 
-            for (int i = 0; i< combinaison.length(); i++){
-                if (combinaison.charAt(i) > mastermindColor+47 || combinaison.charAt(i) < '0'){
-                    System.out.println("Couleur incorrecte. Couleurs de la combinaison à entrer cmprise entre 0 et " + validColor);
-                    combinaisonValide = false;
-                }
-            }
+        if (colorIncorrect) {
+            logger.warn("Couleur saisie incorrecte");
+            System.out.println("Couleur incorrecte. Couleurs de la combinaison à entrer cmprise entre 0 et " + validColor);
+        }
+
         return combinaison;
     }
 }

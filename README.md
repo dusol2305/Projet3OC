@@ -4,6 +4,4 @@ Lors du lancement d'un jeu, les différents paramètres de celui-ci peuvent êtr
 Utilisation :
 Selection du jeu.
 Selection du mode.
-Choix de la combinaison.
-
-A la fin du jeu il est possible de relancer le meme jeu dans le meme mode en selectionnant
+Choix d'une combinaison jusqu'à la fin du jeu.

@@ -1,7 +1,7 @@
 package com.tdevlee;
 
-import com.tdevlee.jeux.MenuJeu;
-import com.tdevlee.helpers.Proprietee;
+import com.tdevlee.jeux.GameMenu;
+import com.tdevlee.helpers.GamesProperties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,13 +11,13 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("Lancement de l'application");
-        Proprietee.getInstance();
+        GamesProperties.getInstance();
         if (args.length == 1) {
-            if ("-dev".equals(args[0]) || Proprietee.devMod) {
+            if ("-dev".equals(args[0]) || GamesProperties.devMod) {
                 devMod = true;
             }
         }
-        MenuJeu menu = new MenuJeu();
+        GameMenu menu = new GameMenu();
         menu.run();
     }
 }

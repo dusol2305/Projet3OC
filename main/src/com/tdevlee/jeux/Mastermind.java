@@ -1,140 +1,159 @@
 package com.tdevlee.jeux;
 
-import com.tdevlee.helpers.Proprietee;
-import com.tdevlee.joueur.Joueur;
+import com.tdevlee.helpers.GamesProperties;
+import com.tdevlee.joueur.Player;
 import com.tdevlee.Main;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
-public class Mastermind implements Jeu {
+/**
+ * <b>Mastermind game.</b>
+ */
+public class Mastermind implements Game {
     private static Logger logger = LogManager.getLogger(Mastermind.class);
-    private Joueur attaquant;
-    private Joueur defenseur;
-    private String combinaison;
-    private String indice;
-    private boolean combinaisonValide = true;
-    private int[] resultatComparaison = new int[2];
+    private Player attacker;
+    private Player defender;
+    private String combination;
+    private String clue;
+    private boolean validCombination = true;
+    private int[] comparisonResult = new int[2];
 
-    private int mastermindTry;//contenue dans le fichier de propriétée
-    private int mastermindColor;
+    private int mastermindTry;
+    private int mastermindColors;
     private int mastermindLengh;
 
-    public Mastermind(Joueur attaquant, Joueur defenseur) {
-        this.attaquant = attaquant;
-        this.defenseur = defenseur;
+    /**
+     * Set the attacker and the defencer.
+     * @param attacker Player who will play as attacker
+     * @param defender Player who will player as defender
+     */
+    public Mastermind(Player attacker, Player defender) {
+        this.attacker = attacker;
+        this.defender = defender;
 
-        mastermindTry = Proprietee.mastermindTry;
-        mastermindColor = Proprietee.mastermindColor;
-        mastermindLengh = Proprietee.mastermindLengh;
+        mastermindTry = GamesProperties.mastermindTry;
+        mastermindColors = GamesProperties.mastermindColor;
+        mastermindLengh = GamesProperties.mastermindLengh;
     }
 
     @Override
-    public void initialisation() {
-        System.out.println("Nombre d'essais : " + mastermindTry);
-        System.out.println("Nombre de couleurs : " + mastermindColor);
-        System.out.println("Taille de la combinaison : " + mastermindLengh);
+    public void initialization() {
+//        System.out.println("Nombre d'essais : " + mastermindTry);
+//        System.out.println("Nombre de couleurs : " + mastermindColors);
+//        System.out.println("Taille de la combination : " + mastermindLengh);
 
-        combinaisonValide = false;
-        while (!combinaisonValide) {
-            combinaison = this.verificationCombinaison(defenseur.demandeCombinaisonAleatoire());
+        validCombination = false;
+        while (!validCombination) {
+            combination = this.checkCombination(defender.askSecretCombination());
         }
 
-        if (Main.devMod || Proprietee.devMod) {
-            System.out.println("Combinaison à trouver : " + combinaison);
+        if (Main.devMod || GamesProperties.devMod) {
+            System.out.println("(Combinaison secrète : " + combination + ")");
         }
-        logger.debug("Iniitalisation de mastermind. Combinaison : " + combinaison + ". Nombre de couleurs : " + mastermindColor + ". Nombre d'essais : " + mastermindTry);
+        logger.debug("Iniitalisation de mastermind. Combinaison : " + combination + ". Nombre de couleurs : " + mastermindColors + ". Nombre d'essais : " + mastermindTry);
     }
 
     @Override
-    public void jouer() {
-        StringBuilder indiceTemp = new StringBuilder();
+    public void play() {
+        StringBuilder tempClue = new StringBuilder();
 
-        System.out.println("il reste " + mastermindTry + " essais");
-        String combinaisonJoueur = null;
+        System.out.println("Il reste " + mastermindTry + " essais");
+        String playerCombination = null;
 
-        combinaisonValide = false;
-        while (!combinaisonValide) {
-            combinaisonJoueur = this.verificationCombinaison(attaquant.demandeCombinaison());
+        validCombination = false;
+        while (!validCombination) {
+            playerCombination = this.checkCombination(attacker.askCombination());
         }
-        logger.info("combinaison du joueur : " + combinaisonJoueur);
+        logger.info("combination du joueur : " + playerCombination);
 
-        resultatComparaison = Mastermind.comparaison(combinaisonJoueur, combinaison);
-        logger.info("resultat de la comparaison : " + resultatComparaison[0] + resultatComparaison[1]);
-        indiceTemp.append(resultatComparaison[0] + " présent, " + resultatComparaison[1] + " bien placé\n");
-        indice = indiceTemp.toString();
-        attaquant.envoyerIndice(indice);
-        logger.debug("indice : " + indice +" | combinaison joueur : " + combinaisonJoueur + " | combinaison du jeu : "+ combinaison);
+        comparisonResult = Mastermind.comparison(playerCombination, combination);
+        logger.info("resultat de la comparison : " + comparisonResult[0] + comparisonResult[1]);
+        tempClue.append(comparisonResult[0] + " présent, " + comparisonResult[1] + " bien placé");
+        clue = tempClue.toString();
+        attacker.displayClue(clue);
+        logger.debug("clue : " + clue +" | combination joueur : " + playerCombination + " | combination du jeu : "+ combination);
         mastermindTry--;
     }
 
     @Override
-    public boolean estFin() {
+    public boolean isEnd() {
         if (mastermindTry >= 0) {
-            if (resultatComparaison[1] == combinaison.length()) {
-                attaquant.affichageResultatPartie(true);
+            if (comparisonResult[1] == combination.length()) {
+                attacker.displayGameResult(true);
                 return false;
             }
         } else {
-            attaquant.affichageResultatPartie(false);
+            attacker.displayGameResult(false);
             return false;
         }
         return true;
     }
 
-    public static int[] comparaison(String combinaisonProposee, String combinaisonATrouver) {
+    /**
+     * Do the comparison to set the clue to find the combination.
+     * @param attackerCombination combination enter by the attacking player.
+     * @param gameSecretCombination secret combination to find.
+     * @return the clue send to the player to find the combination.
+     */
+    public static int[] comparison(String attackerCombination, String gameSecretCombination) {
         int present = 0;
-        int bienPlace = 0;
-        int[] indice = new int[2];
+        int wellPlaced = 0;
+        int[] comparisonClue = new int[2];
 
-        Set<Character> combinaisonProposeeSansDoublon = new HashSet<>();
-        for (int i = 0; i < combinaisonProposee.length(); i++) {
-            combinaisonProposeeSansDoublon.add(combinaisonProposee.charAt(i));
+        Set<Character> combinationWithoutDuplicatedNumber = new HashSet<>();
+        for (int i = 0; i < attackerCombination.length(); i++) {
+            combinationWithoutDuplicatedNumber.add(attackerCombination.charAt(i));
         }
 
-        for (int i = 0; i < combinaisonATrouver.length(); i++) {
-            if (combinaisonProposee.charAt(i) == combinaisonATrouver.charAt(i)) {
-                bienPlace++;
-                combinaisonProposeeSansDoublon.remove(combinaisonATrouver.charAt(i));
+        for (int i = 0; i < gameSecretCombination.length(); i++) {
+            if (attackerCombination.charAt(i) == gameSecretCombination.charAt(i)) {
+                wellPlaced++;
+                combinationWithoutDuplicatedNumber.remove(gameSecretCombination.charAt(i));
 
             }
         }
 
-        for (int i = 0; i < combinaisonATrouver.length(); i++) {
-            if (combinaisonProposeeSansDoublon.contains(combinaisonATrouver.charAt(i))) {
+        for (int i = 0; i < gameSecretCombination.length(); i++) {
+            if (combinationWithoutDuplicatedNumber.contains(gameSecretCombination.charAt(i))) {
                 present++;
-                combinaisonProposeeSansDoublon.remove(combinaisonATrouver.charAt(i));
+                combinationWithoutDuplicatedNumber.remove(gameSecretCombination.charAt(i));
             }
         }
 
-        indice[0] = present;
-        indice[1] = bienPlace;
-        return indice;
+        comparisonClue[0] = present;
+        comparisonClue[1] = wellPlaced;
+        return comparisonClue;
     }
 
-    private String verificationCombinaison(String combinaison) {
-        int validColor = mastermindColor - 1;
-        boolean colorIncorrect = false;
-        combinaisonValide = true;
-        if (combinaison.length() != mastermindLengh) {
-            System.out.println("Taille de la combinaison incorrecte. Taille de la combinaison à entrer : " + mastermindLengh);
-            logger.warn("Taille de la combinaison saisie incorrecte");
-            combinaisonValide = false;
+    /**
+     * Check if the combination entered by the player is valid.
+     * @param combination combination enter by the player
+     * @return the combination when it's valid
+     */
+    private String checkCombination(String combination) {
+        int validColor = mastermindColors - 1;
+        boolean incorectColor = false;
+        validCombination = true;
+        if (combination.length() != mastermindLengh) {
+            System.out.println("Taille de la combination incorrecte. Taille de la combination à entrer : " + mastermindLengh);
+            logger.warn("Taille de la combination saisie incorrecte");
+            validCombination = false;
         }
 
-        for (int i = 0; i < combinaison.length(); i++) {
-            if (combinaison.charAt(i) > mastermindColor + 47 || combinaison.charAt(i) < '0') {
-                colorIncorrect = true;
-                combinaisonValide = false;
+        for (int i = 0; i < combination.length(); i++) {
+            if (combination.charAt(i) > mastermindColors + 47 || combination.charAt(i) < '0') {
+                incorectColor = true;
+                validCombination = false;
             }
         }
 
-        if (colorIncorrect) {
+        if (incorectColor) {
             logger.warn("Couleur saisie incorrecte");
-            System.out.println("Couleur incorrecte. Couleurs de la combinaison à entrer cmprise entre 0 et " + validColor);
+            System.out.println("Couleur incorrecte. Couleurs de la combination à entrer cmprise entre 0 et " + validColor);
         }
 
-        return combinaison;
+        return combination;
     }
 }

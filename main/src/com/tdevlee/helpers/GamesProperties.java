@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Properties;
 
-public class Proprietee {
-    private static Logger logger = LogManager.getLogger(Proprietee.class);
+public class GamesProperties {
+    private static Logger logger = LogManager.getLogger(GamesProperties.class);
     public static int mastermindLengh;
     public static int mastermindTry;
     public static int mastermindColor;
@@ -19,7 +19,7 @@ public class Proprietee {
 
     public static boolean devMod = false;
 
-    private Proprietee() {
+    private GamesProperties() {
         Properties prop = new Properties();
         Reader in = null;
         try {
@@ -48,11 +48,11 @@ public class Proprietee {
         }
     }
 
-    private static Proprietee Proprietee = null;
-    public static synchronized Proprietee getInstance() {
-        if (Proprietee == null) {
-            Proprietee = new Proprietee();
+    private static GamesProperties GamesProperties = null;
+    public static synchronized GamesProperties getInstance() {
+        if (GamesProperties == null) {
+            GamesProperties = new GamesProperties();
         }
-        return Proprietee;
+        return GamesProperties;
     }
 }

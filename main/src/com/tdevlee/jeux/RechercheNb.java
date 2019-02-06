@@ -12,7 +12,7 @@ public class RechercheNb implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private String indice;
-    boolean combinaisonAttaquantValide = false;
+    private boolean combinaisonAttaquantValide = false;
 
     private int rechercheNbTry;
     private int rechercheNbLengh;
@@ -93,7 +93,7 @@ public class RechercheNb implements Jeu {
         return indice;
     }
 
-    String verificationCombinaison(String combinaisonAttaquant) {
+    private String verificationCombinaison(String combinaisonAttaquant) {
         combinaisonAttaquantValide = true;
         if (combinaisonAttaquant.length() > rechercheNbLengh){
             System.out.println("taille de la combinaison entrée supérieur à la taille requise. Taille requise : " + rechercheNbLengh);

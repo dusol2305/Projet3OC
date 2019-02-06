@@ -14,7 +14,7 @@ public class Mastermind implements Jeu {
     private Joueur defenseur;
     private String combinaison;
     private String indice;
-    boolean combinaisonValide = true;
+    private boolean combinaisonValide = true;
     private int[] resultatComparaison = new int[2];
 
     private int mastermindTry;//contenue dans le fichier de propriétée
@@ -61,7 +61,7 @@ public class Mastermind implements Jeu {
         logger.info("combinaison du joueur : " + combinaisonJoueur);
 
         resultatComparaison = Mastermind.comparaison(combinaisonJoueur, combinaison);
-        logger.info("resultat de la comparaison : " + resultatComparaison);
+        logger.info("resultat de la comparaison : " + resultatComparaison[0] + resultatComparaison[1]);
         indiceTemp.append(resultatComparaison[0] + " présent, " + resultatComparaison[1] + " bien placé\n");
         indice = indiceTemp.toString();
         attaquant.envoyerIndice(indice);

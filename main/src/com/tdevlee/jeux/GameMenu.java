@@ -100,7 +100,7 @@ public class GameMenu {
                         logger.info("Lancement mastermind challenger");
                         Game mastermindChall = new Mastermind(new Human(), new AIMastermind());
                         mastermindChall.initialization();
-                        while (mastermindChall.isEnd()) {
+                        while (!mastermindChall.isEnd()) {
                             mastermindChall.play();
                         }
                         break;
@@ -108,7 +108,7 @@ public class GameMenu {
                         logger.info("Lancement mastermind defenseur");
                         Game mastermindDef = new Mastermind(new AIMastermind(), new Human());
                         mastermindDef.initialization();
-                        while (mastermindDef.isEnd()) {
+                        while (!mastermindDef.isEnd()) {
                             mastermindDef.play();
                         }
                         break;
@@ -118,7 +118,7 @@ public class GameMenu {
                         Game mastermindDuel2 = new Mastermind(new AIMastermind(), new Human());
                         mastermindDuel1.initialization();
                         mastermindDuel2.initialization();
-                        while (mastermindDuel1.isEnd() && mastermindDuel2.isEnd()) {
+                        while (!mastermindDuel1.isEnd() && mastermindDuel2.isEnd()) {
                             System.out.println("\nTour du joueur");
                             mastermindDuel1.play();
                             System.out.println("\nTour de l'IA");

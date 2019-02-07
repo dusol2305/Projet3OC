@@ -91,7 +91,6 @@ public class AIMastermind implements Player {
             System.out.println("AIMastermind Gagné");
         } else {
             logger.info("AIMastermind a perdu");
-            System.out.println("AIMastermind Perdu");
         }
     }
 }

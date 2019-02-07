@@ -22,6 +22,7 @@ public class SearchNumber implements Game {
 
     /**
      * Set the player who will be the attacker and the player who will be de denfender.
+     *
      * @param attacker attacking player
      * @param defender defender player
      */
@@ -67,10 +68,26 @@ public class SearchNumber implements Game {
 
     @Override
     public boolean isEnd() {
+        boolean win = true;
         if (clue == null) {
             return false;
         }
-        if (searchNumberTry >= 0) {
+        for (int i = clue.length() - 1; i > -1; i--) {
+            if (clue.charAt(i) == '=') {
+                i--;
+            } else {
+                win = false;
+            }
+        }
+        if (searchNumberTry == 0 || win == true){
+            attacker.displayGameResult(win);
+            if (win == false){
+                System.out.println("La combinaison était : " + combination);
+            }
+            return true;
+        }
+        return false;
+        /*if (searchNumberTry >= 0) {
             int i = clue.length() - 1;
             while (i > -1) {
                 if (clue.charAt(i) == '=') {
@@ -79,16 +96,19 @@ public class SearchNumber implements Game {
                     return false;
                 }
             }
+            win = true;
             attacker.displayGameResult(true);
-        } else {
-            attacker.displayGameResult(false);
         }
-        return true;
+        if (searchNumberTry == 0 && win == false){
+            attacker.displayGameResult(false);
+            System.out.println("La combinaison était : " + combination);
+        }*/
     }
 
     /**
      * Do the comparison to set the clue to find the combination.
-     * @param attackerCombination combination enter by the attacking player.
+     *
+     * @param attackerCombination   combination enter by the attacking player.
      * @param gameSecretCombination secret combination to find.
      * @return the clue send to the player to find the combination.
      */
@@ -110,16 +130,17 @@ public class SearchNumber implements Game {
 
     /**
      * Check if the combination entered by the player is valid.
+     *
      * @param playerCombination combination enter by the player
      * @return the combination when it's valid
      */
     private String checkCombination(String playerCombination) {
         validAttackerCombination = true;
-        if (playerCombination.length() > searchNumberLengh){
+        if (playerCombination.length() > searchNumberLengh) {
             System.out.println("taille de la combination entrée supérieur à la taille requise. Taille requise : " + searchNumberLengh);
             logger.warn("Taille de la combination entrée supérieur à la taille requise");
             validAttackerCombination = false;
-        } else if (playerCombination.length() < searchNumberLengh){
+        } else if (playerCombination.length() < searchNumberLengh) {
             logger.warn("Taille de la combination entrée inférieur à la taille requise.");
             System.out.println("taille de la combination entrée inférieur à la taille requise. Taille requise : " + searchNumberLengh);
             validAttackerCombination = false;

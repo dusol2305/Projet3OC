@@ -79,16 +79,21 @@ public class Mastermind implements Game {
 
     @Override
     public boolean isEnd() {
-        if (mastermindTry >= 0) {
-            if (comparisonResult[1] == combination.length()) {
-                attacker.displayGameResult(true);
-                return false;
-            }
-        } else {
-            attacker.displayGameResult(false);
+        boolean win = true;
+        if (clue == null) {
             return false;
         }
-        return true;
+        if (comparisonResult[1] != combination.length()) {
+            win = false;
+        }
+        if (mastermindTry == 0 || win == true){
+            attacker.displayGameResult(win);
+            if (win == false){
+                System.out.println("La combinaison était : " + combination);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -44,7 +44,7 @@ public class SearchNumber implements Game {
             combination = checkCombination(defender.askSecretCombination());
         }
 
-        if (Main.devMod) {
+        if (Main.devMod || GamesProperties.devMod) {
             System.out.println("(Combinaison secrète : " + combination + ")");
         }
         logger.debug("Iniitalisation de SearchNumber. Combinaison : " + combination + ". Nombre d'essais : " + searchNumberTry + ". Taille de la combination : " + searchNumberLengh);
@@ -73,9 +73,7 @@ public class SearchNumber implements Game {
             return false;
         }
         for (int i = clue.length() - 1; i > -1; i--) {
-            if (clue.charAt(i) == '=') {
-                i--;
-            } else {
+            if (clue.charAt(i) != '=') {
                 win = false;
             }
         }

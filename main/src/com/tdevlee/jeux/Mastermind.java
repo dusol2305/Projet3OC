@@ -27,7 +27,7 @@ public class Mastermind implements Game {
     /**
      * Set the attacker and the defencer.
      * @param attacker Player who will play as attacker
-     * @param defender Player who will player as defender
+     * @param defender Player who will play as defender
      */
     public Mastermind(Player attacker, Player defender) {
         this.attacker = attacker;
@@ -70,7 +70,7 @@ public class Mastermind implements Game {
 
         comparisonResult = Mastermind.comparison(playerCombination, combination);
         logger.info("resultat de la comparison : " + comparisonResult[0] + comparisonResult[1]);
-        tempClue.append(comparisonResult[0] + " présent, " + comparisonResult[1] + " bien placé");
+        tempClue.append(comparisonResult[0] + " présent(s), " + comparisonResult[1] + " bien placé(s)");
         clue = tempClue.toString();
         attacker.displayClue(clue);
         logger.debug("clue : " + clue +" | combination joueur : " + playerCombination + " | combination du jeu : "+ combination);

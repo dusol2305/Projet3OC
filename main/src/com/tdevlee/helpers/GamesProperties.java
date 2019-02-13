@@ -43,6 +43,13 @@ public class GamesProperties {
 
         rechercheNbLengh = Integer.parseInt(prop.getProperty("rechercheNbLengh"));
         rechercheNbTry = Integer.parseInt(prop.getProperty("rechercheNbTry"));
+
+        if (mastermindColor < 4){ //Set max or min value if mastermindColor is not between 4 and 10
+            mastermindColor = 4;
+        } else if (mastermindColor > 10) {
+            mastermindColor = 10;
+        }
+
         if (prop.getProperty("devmod").equals("true")) {
             devMod = true;
         }

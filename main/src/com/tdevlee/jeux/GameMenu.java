@@ -22,14 +22,19 @@ public class GameMenu {
      * Select the wanted game
      */
     public void gameSelection() {
-        int gameSelection;
+        byte gameSelection = 0;
         boolean validChoice = true;
-
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Choix du jeux :\n1 : Mastermind\n2 : Recherche +/-");
 
         while (validChoice) {
-            System.out.println("Choix du jeux :\n1 : Mastermind\n2 : Recherche +/-");
-            gameSelection = sc.nextInt();
+            Scanner sc = new Scanner(System.in);
+
+            try {
+                gameSelection = sc.nextByte();
+            } catch (InputMismatchException ex){
+                logger.warn("Saisie du nombre de selection du jeu invalide. Choississez un nombre entre 1 et 2.");
+            }
+
             switch (gameSelection) {
                 case 1:
                     System.out.println("Selection Mastermind");
@@ -54,14 +59,19 @@ public class GameMenu {
      * Select the game mode
      */
     public void modeSelection() {
-        int mode;
+        byte mode = 0;
         boolean validChoice = true;
-
-        Scanner sc = new Scanner(System.in);
+        System.out.println("Choix du mode :\n1 : Challenger\n2 : Défenseur\n3 : Duel");
 
         while (validChoice) {
-            System.out.println("Choix du mode :\n1 : Challenger\n2 : Défenseur\n3 : Duel");
-            mode = sc.nextInt();
+            Scanner sc = new Scanner(System.in);
+
+            try {
+                mode = sc.nextByte();
+            } catch (InputMismatchException ex){
+                logger.warn("Saisie du nombre de fin de partie invalide");
+            }
+
             switch (mode) {
                 case 1:
                     System.out.println("Selection du mode challenger");
@@ -176,13 +186,14 @@ public class GameMenu {
      * Run the game and ask what to do at the end of it.
      */
     public void run() {
-        byte endGameChoice = 0;
-        boolean vaildChoice = true;
+        byte endGameChoice;
+        boolean validChoice = true;
         while (quit) {
             this.gameSelection();
             this.modeSelection();
             this.gameStart();
-            while (vaildChoice) {
+            while (validChoice) {
+                endGameChoice = 0;
                 System.out.println("Que souhaitez vous faire ?\n1 : Rejouer au même jeu\n2 : Jouer à un autre jeu\n3 : Quitter");
                 Scanner sc = new Scanner(System.in);
 
@@ -197,11 +208,11 @@ public class GameMenu {
                         this.gameStart();
                         break;
                     case 2:
-                        vaildChoice = false;
+                        validChoice = false;
                         break;
                     case 3:
                         quit = false;
-                        vaildChoice = false;
+                        validChoice = false;
                         logger.info("Fermeture de l'application");
                         break;
                     default:
@@ -209,7 +220,7 @@ public class GameMenu {
                         break;
                 }
             }
-            vaildChoice = true;
+            validChoice = true;
         }
     }
 }

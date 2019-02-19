@@ -15,7 +15,7 @@ public class SearchNumber implements Game {
     private Player defender;
     private String combination;
     private String clue;
-    private boolean validAttackerCombination = false;
+    private boolean validCombination = false;
 
     private int searchNumberTry;
     private int searchNumberLengh;
@@ -39,8 +39,8 @@ public class SearchNumber implements Game {
 //        System.out.println("Nombre d'éssais : " + searchNumberTry);
 //        System.out.println("Taille de la combination : " + GamesProperties.rechercheNbLengh);
 
-        validAttackerCombination = false;
-        while (!validAttackerCombination) {
+        validCombination = false;
+        while (!validCombination) {
             combination = checkCombination(defender.askSecretCombination());
         }
 
@@ -55,8 +55,8 @@ public class SearchNumber implements Game {
         String combinaisonAttaquant = null;
 
         System.out.println("Il reste " + searchNumberTry + " essais");
-        validAttackerCombination = false;
-        while (!validAttackerCombination) {
+        validCombination = false;
+        while (!validCombination) {
             combinaisonAttaquant = checkCombination(attacker.askCombination());
         }
 
@@ -77,30 +77,14 @@ public class SearchNumber implements Game {
                 win = false;
             }
         }
-        if (searchNumberTry == 0 || win == true){
+        if (searchNumberTry == 0 || win){
             attacker.displayGameResult(win);
-            if (win == false){
+            if (!win){
                 System.out.println("La combinaison était : " + combination);
             }
             return true;
         }
         return false;
-        /*if (searchNumberTry >= 0) {
-            int i = clue.length() - 1;
-            while (i > -1) {
-                if (clue.charAt(i) == '=') {
-                    i--;
-                } else {
-                    return false;
-                }
-            }
-            win = true;
-            attacker.displayGameResult(true);
-        }
-        if (searchNumberTry == 0 && win == false){
-            attacker.displayGameResult(false);
-            System.out.println("La combinaison était : " + combination);
-        }*/
     }
 
     /**
@@ -128,21 +112,30 @@ public class SearchNumber implements Game {
 
     /**
      * Check if the combination entered by the player is valid.
-     *
-     * @param playerCombination combination enter by the player
+     * @param combination combination enter by the player
      * @return the combination when it's valid
      */
-    private String checkCombination(String playerCombination) {
-        validAttackerCombination = true;
-        if (playerCombination.length() > searchNumberLengh) {
-            System.out.println("taille de la combination entrée supérieur à la taille requise. Taille requise : " + searchNumberLengh);
-            logger.warn("Taille de la combination entrée supérieur à la taille requise");
-            validAttackerCombination = false;
-        } else if (playerCombination.length() < searchNumberLengh) {
-            logger.warn("Taille de la combination entrée inférieur à la taille requise.");
-            System.out.println("taille de la combination entrée inférieur à la taille requise. Taille requise : " + searchNumberLengh);
-            validAttackerCombination = false;
+    private String checkCombination(String combination) {
+        boolean incorectColor = false;
+        validCombination = true;
+        if (combination.length() != searchNumberLengh) {
+            System.out.println("Taille de la combination incorrecte. Taille de la combination à entrer : " + searchNumberLengh);
+            logger.warn("Taille de la combination saisie incorrecte");
+            validCombination = false;
         }
-        return playerCombination;
+
+        for (int i = 0; i < combination.length(); i++) {
+            if (combination.charAt(i) > '9' || combination.charAt(i) < '0') {
+                incorectColor = true;
+                validCombination = false;
+            }
+        }
+
+        if (incorectColor) {
+            logger.warn("Couleur saisie incorrecte");
+            System.out.println("Couleur incorrecte. Couleurs de la combination à entrer comprise entre 0 et 9");
+        }
+
+        return combination;
     }
 }

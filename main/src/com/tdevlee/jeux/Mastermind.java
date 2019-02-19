@@ -156,7 +156,7 @@ public class Mastermind implements Game {
 
         if (incorectColor) {
             logger.warn("Couleur saisie incorrecte");
-            System.out.println("Couleur incorrecte. Couleurs de la combination à entrer cmprise entre 0 et " + validColor);
+            System.out.println("Couleur incorrecte. Couleurs de la combination à entrer comprise entre 0 et " + validColor);
         }
 
         return combination;

@@ -42,22 +42,41 @@ public class AISearchNumber implements Player {
         return combinaison;
     }
 
+    /**
+     * Display and use the clue to generate a new possible combination.
+     * @param clue clue returned from the game
+     */
     @Override
     public void displayClue(String clue) {
         System.out.println("Proposition : " + combination + " -> Réponse : " + clue);
 
-        char[] iaCombinaison = combination.toCharArray();
-        int i = clue.length() - 1;
-        while (i > -1) {
+        char[] iaCombination = combination.toCharArray();
+        double temporary;
+        for (int i = clue.length() - 1; i > -1; i--) {
             if (clue.charAt(i) == '-') {
-                iaCombinaison[i]--;
-                combination = String.valueOf(iaCombinaison);
-            } else if (clue.charAt(i) == '+') {
-                iaCombinaison[i]++;
-                combination = String.valueOf(iaCombinaison);
+                temporary = iaCombination[i] - '0';
+                if (temporary > 5 && temporary != 7)
+                    temporary += 4;
+                else if (temporary < 5 && temporary > 2)
+                    temporary += 2;
+                else if (temporary == 7){
+                    temporary += 6;
+                }
+                temporary /= 2;
+                iaCombination[i] = (char)(Math.floor(temporary) + '0');
             }
-            i--;
+
+            else if (clue.charAt(i) == '+') {
+                temporary = iaCombination[i] - '0';
+                if (temporary >= 5)
+                    temporary += (9);
+                if (temporary < 5)
+                    temporary += 5;
+                temporary /= 2;
+                iaCombination[i] = (char)(Math.ceil(temporary) + '0');
+            }
         }
+        combination = String.valueOf(iaCombination);
     }
 
     @Override
